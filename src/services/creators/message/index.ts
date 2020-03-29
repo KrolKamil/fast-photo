@@ -1,4 +1,5 @@
 import IMessage from "../../../models/interfaces/IMessage"
+import WebSocket from "ws";
 
 const getPrefixAndSurfixOfType = (type: string) => {
     const indexOfSeparator = type.search('_');
@@ -15,7 +16,7 @@ const getPrefixAndSurfixOfType = (type: string) => {
     }
 };
 
-const message = (message: any): IMessage => {
+const message = (message: any, ws: WebSocket): IMessage => {
     if(message){
         if( (message.type) && (message.payload) ){
             const dividedType = getPrefixAndSurfixOfType(message.type);
@@ -23,7 +24,8 @@ const message = (message: any): IMessage => {
                 type: message.type,
                 payload: message.payload,
                 prefix: dividedType.prefix,
-                surfix: dividedType.surfix
+                surfix: dividedType.surfix,
+                ws
             }
             return newMessage;
         }

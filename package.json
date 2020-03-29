@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/jsonwebtoken": "^8.3.8",
     "@types/ws": "^7.2.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

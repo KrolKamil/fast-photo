@@ -1,15 +1,16 @@
 import IHandler from "../../../models/interfaces/IHandler";
 import IMessage from "../../../models/interfaces/IMessage";
 import players from "../../../services/Players";
+import jwt from 'jsonwebtoken';
+import IResponse from "../../../models/interfaces/IResponse";
+
+const x = () => {
+    const aa = jwt.sign({}, 'abc');
+    console.log(aa);
+}
 
 export default class Welcome implements IHandler{
-    preHandle = (payload: any) => {
-        if(!payload.token) {
-            throw new Error('missing token');
-        }
-    }
-
-    handle = async (message: IMessage) => {
+    handle = async (message: IMessage) : Promise<IResponse> => {
         if(message.payload.token){
             if(players.exists(message.payload.token)){
                 // send ok
@@ -23,5 +24,13 @@ export default class Welcome implements IHandler{
                 // send ok
             }
         }
+        const response: IResponse = {
+            type: 'a',
+            payload: {
+                a: 'ab'
+            },
+            to: 'player'
+        }
+        return response;
     }
 }
