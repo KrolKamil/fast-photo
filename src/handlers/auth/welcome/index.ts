@@ -4,24 +4,40 @@ import players from "../../../services/Players";
 import jwt from 'jsonwebtoken';
 import IResponse from "../../../models/interfaces/IResponse";
 
-const x = () => {
-    const aa = jwt.sign({}, 'abc');
-    console.log(aa);
-}
-
 export default class Welcome implements IHandler{
     handle = async (message: IMessage) : Promise<IResponse> => {
         if(message.payload.token){
             if(players.exists(message.payload.token)){
-                // send ok
+                const response: IResponse =  {
+                    type: 'auth_welcome-success',
+                    payload: {
+                        token: message.payload.token
+                    },
+                    to: 'player'
+                }
+                return response;
             } else {
-                //send missing
+                const response: IResponse =  {
+                    type: 'auth_welcome-error',
+                    payload: {
+                        error: 'invalid token'
+                    },
+                    to: 'player'
+                }
+                return response;
             }
         } else {
             if(players.isFull()){
-                // send full
+                const response: IResponse =  {
+                    type: 'auth_welcome-error',
+                    payload: {
+                        error: 'no more space for new players'
+                    },
+                    to: 'player'
+                }
+                return response;
             } else {
-                // send ok
+                players.add()
             }
         }
         const response: IResponse = {
