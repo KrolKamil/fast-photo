@@ -12,7 +12,7 @@ wss.on(('connection'), (ws) => {
         try{
             const parsedMessage = await parseJsonAsync(message);
             const updatedMessage = messageCreator(parsedMessage);
-            handlers.handle(updatedMessage);
+            await handlers.handle(updatedMessage);
         } catch (e) {
             ws.send(e.message);
         }

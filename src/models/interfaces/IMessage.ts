@@ -1,6 +1,6 @@
 export default interface IMessage {
     type: string,
-    payload: object
+    payload: any
     prefix: string,
     surfix: string
 }

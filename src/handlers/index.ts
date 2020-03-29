@@ -8,14 +8,10 @@ export default class Handlers {
     handlers: TSuperHandlers
     constructor() {
         this.handlers = new Map();
-        this.loadSuperHandlers();
-    }
-
-    loadSuperHandlers = () => {
         this.handlers.set(Auth.name.toLowerCase(), new Auth());
     }
   
-    handle = (message: IMessage) => {
+    handle = async (message: IMessage) => {
       if (!this.handlers.has(message.type)) {
         throw new Error('No handler for message')
       }

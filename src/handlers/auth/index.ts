@@ -1,21 +1,19 @@
 import IMessage from '../../models/interfaces/IMessage';
 import ISuperHandler from '../../models/interfaces/ISuperHandler';
 import THandlers from '../../models/types/THandlers';
+import Welcome from './welcome';
 
 export default class Auth implements ISuperHandler  {
-  type: string;
   handlers: THandlers
   constructor(){
-    this.type = 'auth';
     this.handlers = new Map();
-    this.loadHandlers();
-  }
-
-  loadHandlers = () => {
-
+    this.handlers.set(Welcome.name.toLowerCase(), new Welcome());
   }
 
   handle = async (message: IMessage) => {
-    
+    if (!this.handlers.has(message.type)) {
+      throw new Error('No handler for message')
+    }
+    this.handlers.get(message.surfix)?.handle(message);
   }
 }
