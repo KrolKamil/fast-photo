@@ -1,5 +1,5 @@
-import ISuperHandler from "../interfaces/ISuperHandler";
+import IHandler from "../interfaces/IHandler";
 
-type THandlers = Map<string, ISuperHandler>;
+type THandlers = Map<string, IHandler>;
 
 export default THandlers;

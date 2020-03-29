@@ -1,17 +1,17 @@
 import ISuperHandler from "../models/interfaces/ISuperHandler"
 import IMessage from "../models/interfaces/IMessage"
-import THandlers from "../models/types/THandlers";
+import TSuperHandlers from "../models/types/TSuperHandlers";
 
 import Auth from './auth';
 
 export default class Handlers {
-    handlers: THandlers
+    handlers: TSuperHandlers
     constructor() {
         this.handlers = new Map();
-        this.loadHandlers();
+        this.loadSuperHandlers();
     }
 
-    loadHandlers = () => {
+    loadSuperHandlers = () => {
         this.handlers.set(Auth.name.toLowerCase(), new Auth());
     }
   
