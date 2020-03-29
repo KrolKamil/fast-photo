@@ -14,7 +14,7 @@ wss.on(('connection'), (ws) => {
             const updatedMessage = messageCreator(parsedMessage);
             handlers.handle(updatedMessage);
         } catch (e) {
-
+            ws.send(e.message);
         }
     });
 })
