@@ -1,12 +1,12 @@
 import IMessage from '../../models/interfaces/IMessage';
-import IHandler from '../../models/interfaces/IHandler';
+import ISuperHandler from '../../models/interfaces/ISuperHandler';
 
-export default class Auth implements IHandler  {
+export default class Auth implements ISuperHandler  {
   type: string;
   constructor(){
     this.type = 'auth';
   }
-  handle = (message: IMessage) => {
+  handle = async (message: IMessage) => {
     
   }
 }
