@@ -10,18 +10,22 @@ export default class Welcome implements IHandler{
         if(message.payload.token){
             if(players.exists(message.payload.token)){
                 const response: IResponse =  {
-                    type: 'auth_welcome-success',
-                    payload: {
-                        token: message.payload.token
+                    response: {
+                        type: 'auth_welcome-success',
+                        payload: {
+                            token: message.payload.token
+                        }
                     },
                     to: 'player'
                 }
                 return response;
             } else {
                 const response: IResponse =  {
-                    type: 'auth_welcome-error',
+                    response: {
+                        type: 'auth_welcome-error',
                     payload: {
                         error: 'invalid token'
+                    }
                     },
                     to: 'player'
                 }
@@ -30,10 +34,12 @@ export default class Welcome implements IHandler{
         } else {
             if(players.isFull()){
                 const response: IResponse =  {
+                   response: {
                     type: 'auth_welcome-success',
                     payload: {
                         error: 'no more space for new players'
-                    },
+                    }
+                   },
                     to: 'player'
                 }
                 return response;
@@ -45,9 +51,11 @@ export default class Welcome implements IHandler{
                 }
                 players.add(newPlayer);
                 const response: IResponse =  {
-                    type: 'auth_welcome-error',
-                    payload: {
-                        token: 'no more space for new players'
+                    response: {
+                        type: 'auth_welcome-error',
+                        payload: {
+                            token: 'no more space for new players'
+                        }
                     },
                     to: 'player'
                 }
