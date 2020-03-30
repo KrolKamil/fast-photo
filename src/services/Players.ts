@@ -8,6 +8,10 @@ class Players implements IPlayers {
         this.players = new Map();
     }
 
+    get = (id: string) => {
+        return this.players.get(id);
+    }
+
     exists = (token: string) => {
         return this.players.has(token);
     }

@@ -2,7 +2,7 @@ import TStages from "../models/types/TStages";
 import TStageKeys from "../models/types/TStageKeys";
 
 class Stage{
-    stages: any;
+    stages: TStages;
     currentStage: string
     constructor(stages: TStages) {
         this.stages = stages;
@@ -19,7 +19,9 @@ class Stage{
 }
 
 export const stages: TStages = {
-    AWAITING_FOR_PLAYERS: 'AWAITING_FOR_PLAYERS'
+    AWAITING_FOR_PLAYERS: 'AWAITING_FOR_PLAYERS',
+    AWAITING_FOR_GAME: 'AWAITING_FOR_GAME',
+    GAME: 'GAME'
 }
 
 const stage = new Stage(stages);
