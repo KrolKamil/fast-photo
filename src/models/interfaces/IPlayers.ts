@@ -1,6 +1,6 @@
-import IPlayer from "./IPlayer";
 import TPlayers from "../types/TPlayers";
+import { BehaviorSubject } from "rxjs";
 
 export default interface IPlayers {
-    players: TPlayers
+    players: BehaviorSubject<TPlayers>
 }

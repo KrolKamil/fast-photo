@@ -10,8 +10,4 @@ export default class Player implements IPlayer {
         this.ws = ws;
         this.ready = false;
     }
-
-    changeReady = (ready: boolean) => {
-        this.ready = ready;
-    }
 }

@@ -1,23 +1,28 @@
 import TPlayers from "../models/types/TPlayers";
-import IPlayers from "../models/interfaces/IPlayers";
 import IPlayer from "../models/interfaces/IPlayer";
+import { BehaviorSubject } from "rxjs";
 
-class Players implements IPlayers {
-    players: TPlayers
+class Players {
+    players: BehaviorSubject<TPlayers>
     constructor() {
-        this.players = new Map();
+        this.players = new BehaviorSubject(new Map());
     }
 
-    get = (id: string) => {
-        return this.players.get(id);
+    changeReady = (id: string, ready: boolean) => { 
+        const player = this.players.getValue().get(id);
+        if(!player){
+            throw Error('player not found');
+        }
+        player.ready = ready;
+        this.players.next(this.players.getValue());
     }
 
     exists = (token: string) => {
-        return this.players.has(token);
+        return this.players.getValue().has(token);
     }
 
     isFull = () => {
-        if(this.players.size >= 4) {
+        if(this.players.getValue().size >= 4) {
             return true;
         }
     }
@@ -26,11 +31,8 @@ class Players implements IPlayers {
         if(this.isFull()){
             throw new Error('players storage is full')
         }
-        this.players.set(player.id, player);
-    }
-
-    getAll = (): TPlayers => {
-        return this.players;
+        this.players.getValue().set(player.id, player);
+        this.players.next(this.players.getValue());
     }
 }
 

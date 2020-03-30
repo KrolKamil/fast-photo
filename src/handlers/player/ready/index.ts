@@ -33,7 +33,7 @@ export default class Ready implements IHandler {
             }
             return response;
         }
-        const player = players.get(message.payload.id);
+        const player = players.exists(message.payload.id);
         if(!player){
             const response: IResponse = {
                 response: {
@@ -46,7 +46,7 @@ export default class Ready implements IHandler {
             }
             return response;
         }
-        player.changeReady(message.payload.ready);
+        players.changeReady(message.payload.id, message.payload.ready);
         
         const response: IResponse = {
             response: {
