@@ -1,4 +1,4 @@
 export default interface IPlayer {
-    token: string,
+    id: string,
     ws: WebSocket
 }

@@ -12,10 +12,12 @@
   "license": "ISC",
   "dependencies": {
     "@types/jsonwebtoken": "^8.3.8",
+    "@types/uuid": "^7.0.2",
     "@types/ws": "^7.2.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "uuid": "^7.0.2",
     "ws": "^7.2.3"
   },
   "devDependencies": {
