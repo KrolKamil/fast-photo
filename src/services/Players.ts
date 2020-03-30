@@ -1,11 +1,28 @@
 import TPlayers from "../models/types/TPlayers";
 import IPlayer from "../models/interfaces/IPlayer";
 import { BehaviorSubject } from "rxjs";
+import {map} from 'rxjs/operators'
 
 class Players {
-    players: BehaviorSubject<TPlayers>
+    private players: BehaviorSubject<TPlayers>
     constructor() {
         this.players = new BehaviorSubject(new Map());
+    }
+
+    getPlayersStatuses = () => {
+        return this.players.asObservable().pipe(map((Players) => {
+            const playerStatuses: Array<boolean> = [];
+            Players.forEach((player) => {
+                playerStatuses.push(player.ready);
+            });
+            return playerStatuses;
+        }))
+    }
+
+    sendToAll = (stringifiedMessage: string) => {
+        this.players.getValue().forEach((player) => {
+            player.ws.send(stringifiedMessage);
+        })
     }
 
     changeReady = (id: string, ready: boolean) => { 

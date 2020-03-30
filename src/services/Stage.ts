@@ -3,19 +3,17 @@ import TStageKeys from "../models/types/TStageKeys";
 import { BehaviorSubject} from 'rxjs';
 
 class Stage{
-    stages: TStages;
-    currentStage: BehaviorSubject<string>
+    private currentStage: BehaviorSubject<string>
     constructor(stages: TStages) {
-        this.stages = stages;
         this.currentStage = new BehaviorSubject(stages.AWAITING_FOR_PLAYERS);
     }
 
-    change = (stage: TStageKeys) => {
+    change = (stage: string) => {
         this.currentStage.next(stage);
     }
 
     current = (): string => {
-        return this.currentStage.value;
+        return this.currentStage.getValue();
     }
 }
 

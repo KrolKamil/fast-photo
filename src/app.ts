@@ -21,10 +21,7 @@ wss.on(('connection'), (ws) => {
                     break;
                 }
                 case 'players': {
-                    const allPlayers = players.getAll();
-                    allPlayers.forEach((player) => {
-                        player.ws.send(stringifiedResponse)
-                    })
+                    players.sendToAll(stringifiedResponse);
                     break;
                 }
                 case 'all': {
