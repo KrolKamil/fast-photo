@@ -19,7 +19,6 @@ class Stage{
 
 export const stages: TStages = {
     AWAITING_FOR_PLAYERS: 'AWAITING_FOR_PLAYERS',
-    AWAITING_FOR_GAME: 'AWAITING_FOR_GAME',
     GAME: 'GAME'
 }
 

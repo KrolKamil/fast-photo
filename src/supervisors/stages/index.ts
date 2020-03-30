@@ -11,15 +11,6 @@ export default class Stages {
         players.getPlayersStatuses().subscribe(this.handleNewPlayersStatuses);
     }
 
-    awaitingForGameStageMessage = () => {
-        return JSON.stringify({
-            type: 'stage',
-            payload: {
-                name: 'awaiting-for-game'
-            }
-        })
-    }
-
     gameStartedMessage = () => {
         return JSON.stringify({
             type: 'stage',
@@ -27,11 +18,6 @@ export default class Stages {
                 name: 'game'
             }
         })
-    }
-
-    setAwaitingForGameStage = () => {
-        stage.change(stages.AWAITING_FOR_GAME);
-        players.sendToAll(this.awaitingForGameStageMessage());
     }
 
     setGameStage = () => {
@@ -44,8 +30,7 @@ export default class Stages {
             if(playerStatuses.length >= 2) {
                 const somePlayerIsNotReady = playerStatuses.includes(false);
                 if(!somePlayerIsNotReady){
-                    this.setAwaitingForGameStage();
-                    setTimeout(this.setGameStage, 3000);
+                    this.setGameStage();
                 }
             }
         }
