@@ -13,6 +13,17 @@ wss.on(('connection'), (ws) => {
             const parsedMessage = await parseJsonAsync(message);
             const updatedMessage = messageCreator(parsedMessage, ws);
             const response = await handlers.handle(updatedMessage);
+            switch(response.to){
+                case 'player': {
+                    break;
+                }
+                case 'players': {
+                    break;
+                }
+                case 'all': {
+                    break;
+                }
+            }
         } catch (e) {
             ws.send(e.message);
         }

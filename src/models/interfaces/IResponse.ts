@@ -1,5 +1,7 @@
 export default interface IResponse {
-    type: string,
-    payload: any,
+    response: {
+        type: string,
+        payload: any,
+    }
     to: 'player' | 'players' | 'all'
 }

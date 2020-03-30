@@ -9,8 +9,12 @@ class Stage{
         this.currentStage = stages.AWAITING_FOR_PLAYERS
     }
 
-    changeStage = (stage: TStageKeys) => {
+    change = (stage: TStageKeys) => {
         this.currentStage = stage
+    }
+
+    current = () => {
+        return this.currentStage;
     }
 }
 

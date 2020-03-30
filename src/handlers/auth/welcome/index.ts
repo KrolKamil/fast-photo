@@ -40,7 +40,8 @@ export default class Welcome implements IHandler{
             } else {
                 const newPlayer: IPlayer = {
                     id: identificator.generate(),
-                    ws: message.ws
+                    ws: message.ws,
+                    ready: false
                 }
                 players.add(newPlayer);
                 const response: IResponse =  {

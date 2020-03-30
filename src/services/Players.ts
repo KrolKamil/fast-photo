@@ -22,7 +22,11 @@ class Players implements IPlayers {
         if(this.isFull()){
             throw new Error('players storage is full')
         }
-        this.players.set(player.token, player);
+        this.players.set(player.id, player);
+    }
+
+    getAll = (): TPlayers => {
+        return this.players;
     }
 }
 
