@@ -5,10 +5,12 @@ import messageCreator from './services/creators/message'
 import Handlers from "./handlers";
 import players from "./services/Players";
 import Stages from "./supervisors/stages";
+import Game from "./supervisors/game";
 const wss: Server = new Server({ port: 3000 });
 
 const handlers = new Handlers();
 const supervisorStages = new Stages(wss);
+const supervisorGame = new Game(wss);
 
 wss.on(('connection'), (ws) => {
     ws.on('message', async (message: string) => {

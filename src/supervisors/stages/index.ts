@@ -21,8 +21,8 @@ export default class Stages {
     }
 
     setGameStage = () => {
-        stage.change(stages.GAME);
         players.sendToAll(this.gameStartedMessage());
+        stage.change(stages.GAME);
     }
 
     handleNewPlayersStatuses = (playerStatuses: Array<boolean>) => {

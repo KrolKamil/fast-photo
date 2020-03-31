@@ -1,4 +1,4 @@
-import { Server } from "http";
+import {Server} from 'ws';
 import stage, { stages } from "../../services/Stage";
 import players from "../../services/Players";
 
@@ -11,7 +11,9 @@ export default class Game {
 
     handleNewStage = (stage: string) => {
         if((stage === stages.GAME) && (players.getPlayersHaveWords() === false)){
-            
+            players.setPlayersWords();
+            players.informPlayersAboutTheirWords();
         }
     }
 }
+

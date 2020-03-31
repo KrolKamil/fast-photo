@@ -19,14 +19,34 @@ class Players {
         })
     }
 
-    informPlayersAboutTheirWords = () => {
-        this.players.getValue().forEach((player) => {
+    informPlayerAboutHisWord = (id: string) => {
+        if(this.playersHaveWords === false){
+            throw new Error('player does not have loaded words');
+        }
+        const player =  this.players.getValue().get(id);
+        if(player){
             player.ws.send(JSON.stringify({
                 type: 'player_word',
                 payload: {
                     word: player.word
                 }
-            }))
+            }));
+        }
+    }
+
+    informPlayersAboutTheirWords = () => {
+        if(this.playersHaveWords === false){
+            throw new Error('players do not have loaded words');
+        }
+        this.players.getValue().forEach((player) => {
+            const stringifiedMessage = JSON.stringify({
+                type: 'player_word',
+                payload: {
+                    word: player.word
+                }
+            });
+            console.log(stringifiedMessage);
+            player.ws.send(stringifiedMessage);
         })
     }
 
