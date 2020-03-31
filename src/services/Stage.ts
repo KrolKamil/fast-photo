@@ -8,6 +8,10 @@ class Stage{
         this.currentStage = new BehaviorSubject(stages.AWAITING_FOR_PLAYERS);
     }
 
+    observe = () => {
+        return this.currentStage.asObservable();
+    }
+
     change = (stage: string) => {
         this.currentStage.next(stage);
     }

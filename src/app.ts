@@ -4,10 +4,11 @@ import {parseJsonAsync} from './utils';
 import messageCreator from './services/creators/message'
 import Handlers from "./handlers";
 import players from "./services/Players";
-import { emit } from "cluster";
+import Stages from "./supervisors/stages";
 const wss: Server = new Server({ port: 3000 });
 
 const handlers = new Handlers();
+const supervisorStages = new Stages(wss);
 
 wss.on(('connection'), (ws) => {
     ws.on('message', async (message: string) => {

@@ -2,12 +2,35 @@ import TPlayers from "../models/types/TPlayers";
 import IPlayer from "../models/interfaces/IPlayer";
 import { BehaviorSubject } from "rxjs";
 import {map} from 'rxjs/operators'
+import words from "./Words";
 
 class Players {
     private players: BehaviorSubject<TPlayers>
+    private playersHaveWords: boolean;
     constructor() {
         this.players = new BehaviorSubject(new Map());
+        this.playersHaveWords = false;
     }
+
+    setPlayersWords = () => { 
+        this.playersHaveWords = true;
+        this.players.getValue().forEach((player) => {
+            player.word = words.getRandomWord();
+        })
+    }
+
+    informPlayersAboutTheirWords = () => {
+        this.players.getValue().forEach((player) => {
+            player.ws.send(JSON.stringify({
+                type: 'player_word',
+                payload: {
+                    word: player.word
+                }
+            }))
+        })
+    }
+
+    getPlayersHaveWords = (): boolean => this.playersHaveWords;
 
     getPlayersStatuses = () => {
         return this.players.asObservable().pipe(map((Players) => {
