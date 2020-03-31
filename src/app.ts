@@ -4,6 +4,7 @@ import {parseJsonAsync} from './utils';
 import messageCreator from './services/creators/message'
 import Handlers from "./handlers";
 import players from "./services/Players";
+import { emit } from "cluster";
 const wss: Server = new Server({ port: 3000 });
 
 const handlers = new Handlers();

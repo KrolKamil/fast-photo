@@ -4,12 +4,14 @@ import TSuperHandlers from "../models/types/TSuperHandlers";
 
 import Auth from './auth';
 import IResponse from "../models/interfaces/IResponse";
+import Player from "./player";
 
 export default class Handlers {
     handlers: TSuperHandlers
     constructor() {
         this.handlers = new Map();
         this.handlers.set(Auth.name.toLowerCase(), new Auth());
+        this.handlers.set(Player.name.toLowerCase(), new Player());
     }
   
     handle = async (message: IMessage): Promise<IResponse> => {
