@@ -37,7 +37,7 @@ export default class Welcome implements IHandler{
                     response: {
                         type: 'auth_welcome-error',
                     payload: {
-                        error: 'invalid token'
+                        error: 'invalid id'
                     }
                     },
                     to: 'player'
@@ -48,7 +48,7 @@ export default class Welcome implements IHandler{
             if(players.isFull()){
                 const response: IResponse =  {
                    response: {
-                    type: 'auth_welcome-success',
+                    type: 'auth_welcome-error',
                     payload: {
                         error: 'no more space for new players'
                     }
@@ -57,12 +57,13 @@ export default class Welcome implements IHandler{
                 }
                 return response;
             } else {
-                players.add(new Player(identificator.generate(), message.ws))
+                const id = identificator.generate();
+                players.add(new Player(id, message.ws))
                 const response: IResponse =  {
                     response: {
-                        type: 'auth_welcome-error',
+                        type: 'auth_welcome-success',
                         payload: {
-                            token: 'no more space for new players'
+                            id
                         }
                     },
                     to: 'player'

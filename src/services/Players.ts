@@ -39,9 +39,11 @@ class Players {
     }
 
     isFull = () => {
+        console.log(this.players.getValue().size);
         if(this.players.getValue().size >= 4) {
             return true;
         }
+        return false;
     }
 
     add = (player: IPlayer) => {

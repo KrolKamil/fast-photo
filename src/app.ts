@@ -32,7 +32,12 @@ wss.on(('connection'), (ws) => {
                 }
             }
         } catch (e) {
-            ws.send(e.message);
+            ws.send(JSON.stringify({
+                type: 'internal error',
+                payload: {
+                    error: e.message
+                }
+            }));
         }
     });
 });
