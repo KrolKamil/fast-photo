@@ -5,3 +5,5 @@ export const parseJsonAsync = (jsonString: string) => {
       });
     });
 };
+
+export const base64ToBuffer = (data: any) => Buffer.from(data, 'base64');

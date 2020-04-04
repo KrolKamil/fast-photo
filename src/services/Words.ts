@@ -1,7 +1,7 @@
 class Words{
     words: Array<string>
     constructor(){
-        this.words = ['mouse']
+        this.words = ['Mouse', 'Human']
     }
 
     getRandomWord = (): string => {

@@ -12,6 +12,17 @@ class Players {
         this.playersHaveWords = false;
     }
 
+    getPlayerWord = (id: string) => {
+        if(this.playersHaveWords === false){
+            throw new Error('players do not have words!');
+        }
+        const player = this.players.getValue().get(id);
+        if(!player){
+            throw new Error('player does not exists');
+        }
+        return player.word;
+    }
+
     setPlayersWords = () => { 
         this.playersHaveWords = true;
         this.players.getValue().forEach((player) => {
