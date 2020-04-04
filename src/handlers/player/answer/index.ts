@@ -48,31 +48,40 @@ export default class Answer implements IHandler {
             }
 
         try{
+            let wrongAnswer = true;
+            const playerWord = players.getPlayerWord(message.payload.id);
             const buffer = base64ToBuffer(message.payload.answer);
             const detected = await detectLables(buffer);
             if(detected.Labels){
                 detected.Labels.forEach((label) => {
-
+                    if(label === playerWord){
+                        wrongAnswer = false;
+                    }
                 })
             }
-            console.log(detected.Labels?.forEach((label) => {
-                console.log('----------');
-                console.log(label.Name);
-                console.log(label.Confidence);
-                console.log('----------');
-            }))
-            console.log(detected);
-        } catch (e) {
-            console.log(e.message);
-        }
-
+            if(wrongAnswer){
+                
         const response: IResponse = {
             response: {
-                type: 'player_answer'
+                type: 'player_answer-wrong'
             },
             to: 'player'
         }
         return response;
-
+            } else {
+                const response: IResponse = {
+                    response: {
+                        type: 'game_over',
+                        payload: {
+                            winner: message.payload.id
+                        }
+                    },
+                    to: 'players'
+                }
+                return response;
+            }
+        } catch (e) {
+            throw new Error(e.message);
+        }
     }
 }
