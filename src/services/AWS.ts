@@ -6,6 +6,11 @@ class AmazonWebServices {
     constructor(){
         this.client = null;
     }
+
+    isOperating = () => {
+        return this.client === null ? false: true;
+    }
+
     loadConfig = (config: IAWSConfig) => {
         AWS.config.update(new AWS.Config({
             region: 'us-east-1',
