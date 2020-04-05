@@ -2,10 +2,9 @@ import AWS from 'aws-sdk';
 
 const config = new AWS.Config({
     region: 'us-east-1',
-    accessKeyId: 'ASIA4C5S3JZEWEHAS4N3',
-    secretAccessKey: 'mtXGkp7oScNjN8bFVpIWCKXEo4qV6141a9K39TZE',
-    sessionToken: 'FwoGZXIvYXdzEIT//////////wEaDJoOdH3Kvk/zwWuxPCLFAcU9Ri35AsHDu/vk69JwmwdUz3h4QrwAXfueP2/YC8u9seFXxuOvOabYkrl70ZS7c/FbNImWOjCFJBJowMBAcOvqzV4wdGfPF7hBV4iTfCBBYM2XetEv5nyZy8/krdwJ0kNjcGHbo8oPzdfu0ciiHr1AC4k8HYN1tod7jRoVtM9nBExoyHOi1gqMyAldS9M/VDzi/xc/3GIktgG69V/uIHPzwoVDupaX1iAPbKMnPGZTZ5jQEyQ47nJXnUeX836j9La275zcKKSvo/QFMi0KdixDwG6YeMFs7WVIVEiJGLQgwCmgGjvSiZM1YtHPno7E4mCe5W720agkFhA='
-});
+    accessKeyId: 'ASIA4C5S3JZESJSGAEHU',
+    secretAccessKey: 'o0VvPryQA+3nsHKjWMYb0a/JCbIigKXxYB0pC2/v',
+    sessionToken: 'FwoGZXIvYXdzEJP//////////wEaDM7hGGr8/KT3FrkVpSLFAVzdoIqT3cyIrTQ9bG7rxKyP6+LstzUMUWKba1NhdvW5UTwMNUb8O0wonNclXa5emFuRi4l94t9DmlW93lPB/e2pkNU31xzrtcFQVo0BuKZubDu9hlF8pVF8jlhpA7nGfssQ4iqbSisPF8RieUZzhH77KjpKh+K0d9pWTCssLhz/XEvxRzDzFFsqf8CcanCSSzEIC2GV4L1D2tSydOjEFb9cU1wd0EHKG5bh4on/aTrlWRln042XipcYOvJAAYU32F8Dv8rjKMHEpvQFMi3MqkUxBJPUvX4LrlBLvF464artvfQUC41nxXY8LAjjaP01HaWXMo5xuc0P1uk='});
 AWS.config.update(config);
 const client = new AWS.Rekognition();
 

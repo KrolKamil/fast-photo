@@ -54,13 +54,15 @@ export default class Answer implements IHandler {
             const detected = await detectLables(buffer);
             if(detected.Labels){
                 detected.Labels.forEach((label) => {
-                    if(label === playerWord){
-                        wrongAnswer = false;
+                    console.log(`my word ${playerWord}, label found: ${label.Name}, confidence: ${label.Confidence}`)
+                    if(label.Confidence){
+                        if((label.Name === playerWord) && (label.Confidence >= 0.98)){
+                            wrongAnswer = false;
+                        } 
                     }
                 })
             }
             if(wrongAnswer){
-                
         const response: IResponse = {
             response: {
                 type: 'player_answer-wrong'
