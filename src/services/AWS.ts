@@ -7,6 +7,10 @@ class AmazonWebServices {
         this.client = null;
     }
 
+    reset = () => {
+        this.client = null;
+    }
+
     isOperating = () => {
         return this.client === null ? false: true;
     }
