@@ -1,6 +1,7 @@
 import {Server} from 'ws';
 import stage, { stages } from "../../services/Stage";
 import players from "../../services/Players";
+import { resetEverything } from '../../utils';
 
 export default class Game {
     wss: Server;
@@ -15,7 +16,7 @@ export default class Game {
             players.informPlayersAboutTheirWords();
         } else if (stage === stages.GAME_OVER){
             this.informAboutWinner();
-            this.resetEverything();
+            resetEverything();
         }
     }
 
@@ -26,11 +27,6 @@ export default class Game {
                 winner: players.getWinner()
             }
         }))
-    }
-
-    resetEverything = () => {
-        players.reset();
-        stage.reset();
     }
 }
 

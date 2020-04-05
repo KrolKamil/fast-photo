@@ -1,3 +1,6 @@
+import players from "../services/Players";
+import stage from "../services/Stage";
+
 export const parseJsonAsync = (jsonString: string) => {
     return new Promise(resolve => {
       setTimeout(() => {
@@ -7,3 +10,8 @@ export const parseJsonAsync = (jsonString: string) => {
 };
 
 export const base64ToBuffer = (data: any) => Buffer.from(data, 'base64');
+
+export const resetEverything = () => {
+  players.reset();
+  stage.reset();
+}
