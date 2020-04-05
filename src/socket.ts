@@ -17,7 +17,7 @@ const socket = (server: Server) => {
     
     wss.on(('connection'), (ws) => {
         ws.on('message', async (message: string) => {
-            if((amazonWebServices.isOperating)){
+            if((amazonWebServices.isOperating())){
                 try{
                     const parsedMessage = await parseJsonAsync(message);
                     const updatedMessage = messageCreator(parsedMessage, ws);
@@ -48,12 +48,12 @@ const socket = (server: Server) => {
                     }));
                 }
             } else {
-                ws.send({
+                ws.send(JSON.stringify({
                     type: 'aws_error',
                     payload: {
                         error: 'missing aws configuration'
                     }
-                })
+                }))
             }
         });
     });
