@@ -1,4 +1,5 @@
 import AWS from 'aws-sdk';
+import amazonWebServices from '../../services/AWS';
 
 const config = new AWS.Config({
     region: 'us-east-1',
@@ -9,13 +10,7 @@ AWS.config.update(config);
 const client = new AWS.Rekognition();
 
 const detectLables = async (buffer: any) => {
-    const params = {
-        Image: {
-            Bytes: buffer
-        },
-        MaxLabels: 3
-    }   
-    return client.detectLabels(params).promise();
+    return amazonWebServices.detectLables(buffer);
 }
 
 export default detectLables;

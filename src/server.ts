@@ -3,6 +3,8 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import { resetEverything } from './utils';
 import path from 'path';
+import IAWSConfig from './models/interfaces/IAWSConfig';
+import amazonWebServices from './services/AWS';
 
 const corsOptions = {
     origin: true,
@@ -42,10 +44,21 @@ const server = () => {
           return res.json({
             error: 'required: aws_access_key_id, aws_secret_access_key, aws_session_token'
           })
-        }
-    });
+      }
 
-    console.log(process.cwd());
+      const config: IAWSConfig = {
+        accessKeyId: req.body.aws_access_key_id,
+        secretAccessKey: req.body.aws_secret_access_key,
+        sessionToken: req.body.aws_session_token
+      }
+
+      amazonWebServices.loadConfig(config);
+
+      return res.json({
+        updated: true
+      })
+
+    });
 
     return app;
   }
