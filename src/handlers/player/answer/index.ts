@@ -71,14 +71,14 @@ export default class Answer implements IHandler {
         }
         return response;
             } else {
+                players.setWinner(message.payload.id);
+                stage.change(stages.GAME_OVER);
+                // RESET
                 const response: IResponse = {
                     response: {
-                        type: 'game_over',
-                        payload: {
-                            winner: message.payload.id
-                        }
+                        type: 'player_answer-correct'
                     },
-                    to: 'players'
+                    to: 'player'
                 }
                 return response;
             }

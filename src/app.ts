@@ -1,47 +1,14 @@
-require('dotenv').config()
-import { Server } from "ws";
-import {parseJsonAsync} from './utils';
-import messageCreator from './services/creators/message'
-import Handlers from "./handlers";
-import players from "./services/Players";
-import Stages from "./supervisors/stages";
-import Game from "./supervisors/game";
-const wss: Server = new Server({ port: 3000 });
+import { createServer } from 'http';
+import server from './server';
 
-const handlers = new Handlers();
-const supervisorStages = new Stages(wss);
-const supervisorGame = new Game(wss);
+const runningPort = process.env.PORT || 3000;
 
-wss.on(('connection'), (ws) => {
-    ws.on('message', async (message: string) => {
-        try{
-            const parsedMessage = await parseJsonAsync(message);
-            const updatedMessage = messageCreator(parsedMessage, ws);
-            const response = await handlers.handle(updatedMessage);
-            const stringifiedResponse = JSON.stringify(response.response);
-            switch(response.to){
-                case 'player': {
-                    ws.send(stringifiedResponse)
-                    break;
-                }
-                case 'players': {
-                    players.sendToAll(stringifiedResponse);
-                    break;
-                }
-                case 'all': {
-                    wss.clients.forEach((client) => {
-                        client.send(stringifiedResponse);
-                    })
-                    break;
-                }
-            }
-        } catch (e) {
-            ws.send(JSON.stringify({
-                type: 'internal error',
-                payload: {
-                    error: e.message
-                }
-            }));
-        }
-    });
-});
+const app = () => {
+    const app = createServer(server());
+
+    app.listen(runningPort, () => {
+         console.log(`Server staretd at port: ${runningPort}`);
+        });
+}
+
+app();

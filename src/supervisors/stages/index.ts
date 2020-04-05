@@ -1,13 +1,9 @@
-import {Server} from 'ws';
 import players from '../../services/Players';
 import stage, { stages } from '../../services/Stage';
-import IResponse from '../../models/interfaces/IResponse';
 
 
 export default class Stages {
-    wss: Server
-    constructor(wss: Server){
-        this.wss = wss;
+    constructor(){
         players.getPlayersStatuses().subscribe(this.handleNewPlayersStatuses);
     }
 

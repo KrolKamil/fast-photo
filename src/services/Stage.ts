@@ -1,11 +1,16 @@
 import TStages from "../models/types/TStages";
-import TStageKeys from "../models/types/TStageKeys";
 import { BehaviorSubject} from 'rxjs';
 
 class Stage{
     private currentStage: BehaviorSubject<string>
-    constructor(stages: TStages) {
+    private stages: TStages;
+    constructor(initStages: TStages) {
+        this.stages = initStages;
         this.currentStage = new BehaviorSubject(stages.AWAITING_FOR_PLAYERS);
+    }
+
+    reset = () => {
+        this.currentStage.next(stages.AWAITING_FOR_PLAYERS);
     }
 
     observe = () => {
@@ -23,7 +28,8 @@ class Stage{
 
 export const stages: TStages = {
     AWAITING_FOR_PLAYERS: 'AWAITING_FOR_PLAYERS',
-    GAME: 'GAME'
+    GAME: 'GAME',
+    GAME_OVER: 'GAME_OVER'
 }
 
 const stage = new Stage(stages);

@@ -13,7 +13,24 @@ export default class Game {
         if((stage === stages.GAME) && (players.getPlayersHaveWords() === false)){
             players.setPlayersWords();
             players.informPlayersAboutTheirWords();
+        } else if (stage === stages.GAME_OVER){
+            this.informAboutWinner();
+            this.resetEverything();
         }
+    }
+
+    informAboutWinner = () => {
+        players.sendToAll(JSON.stringify({
+            type: 'game_over',
+            payload: {
+                winner: players.getWinner()
+            }
+        }))
+    }
+
+    resetEverything = () => {
+        players.reset();
+        stage.reset();
     }
 }
 

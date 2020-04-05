@@ -7,9 +7,27 @@ import words from "./Words";
 class Players {
     private players: BehaviorSubject<TPlayers>
     private playersHaveWords: boolean;
+    private winner: string | null;
     constructor() {
         this.players = new BehaviorSubject(new Map());
         this.playersHaveWords = false;
+        this.winner = null;
+    }
+
+    getWinner = () => {
+        return this.winner;
+    }
+
+    setWinner = (id: string) => {
+        if(this.exists(id)){
+            this.winner = id;
+        }
+    }
+
+    reset = () => {
+        this.playersHaveWords = false;
+        this.players.next(new Map());
+        this.winner = null;
     }
 
     getPlayerWord = (id: string) => {
