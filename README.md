@@ -1,19 +1,41 @@
-# Fast Photo (kek)
+# Fast Photo
+Game server for image recognation.(University project)
 ## Description
-It's university project so all criticial errors are returned to user
-To run this app u have to send aws credentials to server.
-To restart server go to url/restart
+Game has three stages.
+#### 1. Waiting for players:
+When at least two players register for the game and all of them set status to ready first stage ends and the game begin.
+Available players actions:
+    * Registration to participate in game(max 4 players)
+    * Changing status to ready/unready
+#### 2. Game:
+Players receive information about what object they have to take a photo to win the game.
+    Available players actions:
+    * Sending image to server to try win the game.
+#### 3. Game Over.
+When player sent correct photo(photo contains object from stage 2) the game ends.
+Server sends winner information to all players.
+    
 # HTTP API
 
-GET
-url\restart - restart server
-(usefull if one of players can't send ready status)
+### Restart
+Restart whole server(usefeull if you lose player id)
+```http
+GET /restart
+```
 
-POST
-url\load
-request have to be json type
-server requres aws credentials to start working properly
-example: 
+### Load
+Server require AWS credentials in order to work.
+This endpoint allows to load those.
+Request MUST be JSON type
+```http
+POST /load
+{
+    "aws_access_key_id": "string",
+    "aws_secret_access_key": "string",
+    "aws_session_token": "string"
+}
+```
+Example:
 
 ```
 {
@@ -24,8 +46,8 @@ example:
 ```
 
 ### WebSocket
-All request MUST be JSON type
-All request MUST have this shape:
+All requests MUST be JSON type
+Boilerplate for any request:
 ```
 {
     type: string,
@@ -36,8 +58,8 @@ All request MUST have this shape:
 ```
 
 ## Auth
-Fetch user id which allows to participate in game.
 ### welcome
+Fetch user id which allows to participate in game.
 ```
 {
     type: 'auth_welcome',
@@ -69,7 +91,7 @@ Example request:
 
 ## ready
 
-Allows to change player ready status
+Allows to change player ready status (only in stage 1)
 (when at least two players send ready(true) status game starts)
 Request example
 ```
@@ -77,15 +99,15 @@ Request example
     type: 'player_ready',
     payload: {
         id: 'player id(u can fetch it by ws request auth_welcome'),
-        ready: true
+        ready: true/false
     }
 }
 ```
 
 ## answer
-Allows player to send img to solve his question word
-
-code to generate RAWDAT: 
+Allows player to send img to try win the game.
+Server MUST receive "rawdata" to "see" image.
+Code to generate RAWDAT: 
 ```
 const processImage = (e) => {
         const file = e.target.files[0];
@@ -97,27 +119,27 @@ const processImage = (e) => {
       }
 ```
 
-Code 
+Core part:
 ```
   const RAWDATA = e.target.result.split("data:image/png;base64,")[1];
 ```
-removes prefix 'data:image/png' to get clear base64.
+Removes prefix 'data:image/png' to get clear base64.
 This prefix is related to image type sended by user so the prefix could also looks like this
-data:image/jpg
+data:image/jpg.
+Server accepts ONLY clear base64.
 
 Request example
 ```
 {
 type: 'player_answer',
-payload: {
-  answer: RAWDATA,
-  id: (player ID)
-}
+    payload: {
+      answer: RAWDATA,
+      id: (player ID)
+    }
 }
 ```
 
-
-Code for testing(kek)
+Dirty code for testing server:
 
 ```
 <!DOCTYPE html>
