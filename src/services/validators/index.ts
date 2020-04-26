@@ -1,7 +1,7 @@
 import message from './message';
 
 const validators = {
-    message
-}
+  message
+};
 
 export default validators;

@@ -1,7 +1,7 @@
-import TStageKeys from "./TStageKeys";
+import TStageKeys from './TStageKeys';
 
 type TStages = {
-    [key in TStageKeys]: string;
-}
+  [key in TStageKeys]: string;
+};
 
 export default TStages;

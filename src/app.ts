@@ -5,12 +5,12 @@ import socket from './socket';
 const runningPort = process.env.PORT || 3000;
 
 const app = () => {
-    const app = createServer(server());
-    socket(app);
+  const app = createServer(server());
+  socket(app);
 
-    app.listen(runningPort, () => {
-         console.log(`Server staretd at port: ${runningPort}`);
-    });
-}
+  app.listen(runningPort, () => {
+    console.log(`Server staretd at port: ${runningPort}`);
+  });
+};
 
 app();

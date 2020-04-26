@@ -1,4 +1,4 @@
-import IPlayer from "../interfaces/IPlayer";
+import IPlayer from '../interfaces/IPlayer';
 
 type TPlayers = Map<string, IPlayer>;
 
