@@ -6,9 +6,11 @@ import messageCreator from './services/creators/message';
 import Handlers from './handlers/Handlers';
 import eventBus from './services/eventBus';
 import AuthWelcome from './handlers/auth-welcome/AuthWelcome';
+import AuthCheck from './handlers/auth-check/AuthCheck';
 
 const handlers = new Handlers({
-  [AuthWelcome.type]: new AuthWelcome(eventBus)
+  [AuthWelcome.type]: new AuthWelcome(eventBus),
+  [AuthCheck.type]: new AuthCheck(eventBus)
 });
 
 const socket = (server: Server): void => {
