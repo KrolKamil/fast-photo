@@ -1,11 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
 
-class Identyfikator {
+class Identificator {
   generate = (): string => {
     return uuidv4();
   };
 }
 
-const identyfikator = new Identyfikator();
+const identificator = new Identificator();
 
-export default identyfikator;
+export default identificator;

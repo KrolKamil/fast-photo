@@ -7,15 +7,15 @@ class AmazonWebServices {
     this.client = null;
   }
 
-  reset = () => {
+  reset = (): void => {
     this.client = null;
   };
 
-  isOperating = () => {
+  isOperating = (): boolean => {
     return this.client === null ? false : true;
   };
 
-  loadConfig = (config: IAWSConfig) => {
+  loadConfig = (config: IAWSConfig): void => {
     AWS.config.update(
       new AWS.Config({
         region: 'us-east-1',
@@ -27,7 +27,7 @@ class AmazonWebServices {
     this.client = new AWS.Rekognition();
   };
 
-  detectLables = async (buffer: any) => {
+  detectLables = async (buffer: any): Promise<any> => {
     if (this.client === null) {
       throw new Error('missing aws config');
     }

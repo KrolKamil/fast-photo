@@ -1,3 +1,5 @@
+import WebSocket from 'ws';
+
 export default interface IPlayer {
   id: string;
   ws: WebSocket;

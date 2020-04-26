@@ -4,7 +4,7 @@ import socket from './socket';
 
 const runningPort = process.env.PORT || 3000;
 
-const app = () => {
+const app = (): void => {
   const app = createServer(server());
   socket(app);
 

@@ -1,4 +1,5 @@
 import IPlayer from './interfaces/IPlayer';
+import WebSocket from 'ws';
 
 export default class Player implements IPlayer {
   id: string;

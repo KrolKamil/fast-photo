@@ -1,7 +1,9 @@
+import WebSocket from 'ws';
+
 export default interface IResponse {
-  response: {
+  ws: WebSocket;
+  message: {
     type: string;
-    payload?: any;
+    payload?: object;
   };
-  to: 'player' | 'players' | 'all';
 }

@@ -114,14 +114,14 @@ class Players {
     return this.players.getValue().has(token);
   };
 
-  isFull = () => {
+  isFull = (): boolean => {
     if (this.players.getValue().size >= 4) {
       return true;
     }
     return false;
   };
 
-  add = (player: IPlayer) => {
+  add = (player: IPlayer): void => {
     if (this.isFull()) {
       throw new Error('players storage is full');
     }

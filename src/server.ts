@@ -1,8 +1,13 @@
-import express, { Request, Response, NextFunction, Errback } from 'express';
+import express, {
+  Express,
+  Request,
+  Response,
+  NextFunction,
+  Errback
+} from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { resetEverything } from './utils';
-import path from 'path';
 import IAWSConfig from './models/interfaces/IAWSConfig';
 import amazonWebServices from './services/AWS';
 
@@ -11,7 +16,7 @@ const corsOptions = {
   credentials: true
 };
 
-const server = () => {
+const server = (): Express => {
   const app = express();
   app.use(cors(corsOptions));
   app.use(bodyParser.json());
@@ -31,10 +36,6 @@ const server = () => {
   app.get('/', (req, res) => {
     res.send(`I'm alive!`);
   });
-
-  // app.get('/load', (req, res) => {
-  //   res.sendFile(path.join(`${process.cwd()}/src/html/load.html`));
-  // });
 
   app.post('/load', (req, res) => {
     if (

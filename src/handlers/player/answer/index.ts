@@ -53,7 +53,7 @@ export default class Answer implements IHandler {
       const buffer = base64ToBuffer(message.payload.answer);
       const detected = await detectLables(buffer);
       if (detected.Labels) {
-        detected.Labels.forEach((label) => {
+        detected.Labels.forEach((label: any) => {
           console.log(
             `my word ${playerWord}, label found: ${label.Name}, confidence: ${label.Confidence}`
           );

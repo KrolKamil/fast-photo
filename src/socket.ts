@@ -3,58 +3,28 @@ import WebSocket from 'ws';
 import { Server } from 'http';
 import { parseJsonAsync } from './utils';
 import messageCreator from './services/creators/message';
-import Handlers from './handlers';
-import players from './services/Players';
-import Stages from './supervisors/stages';
-import Game from './supervisors/game';
-import amazonWebServices from './services/AWS';
+import Handlers from './handlers/Handlers';
+import eventBus from './services/eventBus';
+import AuthWelcome from './handlers/auth-welcome/AuthWelcome';
 
-const socket = (server: Server) => {
+const handlers = new Handlers({
+  [AuthWelcome.type]: new AuthWelcome(eventBus)
+});
+
+const socket = (server: Server): void => {
   const wss: WebSocket.Server = new WebSocket.Server({ server });
-  const handlers = new Handlers();
-  const supervisorStages = new Stages();
-  const supervisorGame = new Game(wss);
-
   wss.on('connection', (ws) => {
     ws.on('message', async (message: string) => {
-      if (amazonWebServices.isOperating()) {
-        try {
-          const parsedMessage = await parseJsonAsync(message);
-          const updatedMessage = messageCreator(parsedMessage, ws);
-          const response = await handlers.handle(updatedMessage);
-          const stringifiedResponse = JSON.stringify(response.response);
-          switch (response.to) {
-            case 'player': {
-              ws.send(stringifiedResponse);
-              break;
-            }
-            case 'players': {
-              players.sendToAll(stringifiedResponse);
-              break;
-            }
-            case 'all': {
-              wss.clients.forEach((client) => {
-                client.send(stringifiedResponse);
-              });
-              break;
-            }
-          }
-        } catch (e) {
-          ws.send(
-            JSON.stringify({
-              type: 'internal error',
-              payload: {
-                error: e.message
-              }
-            })
-          );
-        }
-      } else {
+      try {
+        const parsedMessage = await parseJsonAsync(message);
+        const updatedMessage = messageCreator(parsedMessage, ws);
+        handlers.handle(updatedMessage);
+      } catch (e) {
         ws.send(
           JSON.stringify({
-            type: 'aws_error',
+            type: 'error_internal',
             payload: {
-              error: 'missing aws configuration'
+              error: e.message
             }
           })
         );
