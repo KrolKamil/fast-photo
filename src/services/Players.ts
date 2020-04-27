@@ -1,10 +1,12 @@
 import TPlayers from '../models/types/TPlayers';
 import IPlayer from '../models/interfaces/IPlayer';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import words from './Words';
 
 class Players {
+  private minimumPlayers = 2;
+  private maximumPlayers = 4;
   private players: BehaviorSubject<TPlayers>;
   // private playersHaveWords: boolean;
   // private winner: string | null;
@@ -14,8 +16,11 @@ class Players {
     // this.winner = null;
   }
 
-  public isFull = (): boolean => this.players.getValue().size >= 4;
-  public exists = (token: string) => this.players.getValue().has(token);
+  public isFull = (): boolean =>
+    this.players.getValue().size >= this.maximumPlayers;
+
+  public exists = (token: string): boolean =>
+    this.players.getValue().has(token);
 
   public add = (player: IPlayer): void => {
     if (this.isFull()) {
@@ -24,6 +29,25 @@ class Players {
     this.players.getValue().set(player.id, player);
     this.players.next(this.players.getValue());
   };
+
+  public allReqiredReady = (): Observable<boolean> =>
+    this.observeStatuses().pipe(
+      map(
+        (statuses) =>
+          !statuses.includes(false) && statuses.length >= this.minimumPlayers
+      )
+    );
+
+  private observeStatuses = (): Observable<Array<boolean>> =>
+    this.players.asObservable().pipe(
+      map((Players) => {
+        const statuses: Array<boolean> = [];
+        Players.forEach((player) => {
+          statuses.push(player.ready);
+        });
+        return statuses;
+      })
+    );
 
   // changeReady = (id: string, ready: boolean) => {
   //   const player = this.players.getValue().get(id);
