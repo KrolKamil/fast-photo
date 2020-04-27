@@ -1,5 +1,5 @@
 import TStages from '../models/types/TStages';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 class Stage {
   private currentStage: BehaviorSubject<string>;
@@ -9,21 +9,10 @@ class Stage {
     this.currentStage = new BehaviorSubject(this.stages.AWAITING_FOR_PLAYERS);
   }
 
-  reset = () => {
-    this.currentStage.next(this.stages.AWAITING_FOR_PLAYERS);
-  };
-
-  observe = () => {
-    return this.currentStage.asObservable();
-  };
-
-  change = (stage: string) => {
-    this.currentStage.next(stage);
-  };
-
-  current = (): string => {
-    return this.currentStage.getValue();
-  };
+  reset = (): void => this.currentStage.next(this.stages.AWAITING_FOR_PLAYERS);
+  observe = (): Observable<string> => this.currentStage.asObservable();
+  change = (stage: string): void => this.currentStage.next(stage);
+  current = (): string => this.currentStage.getValue();
 }
 
 export const stages: TStages = {
