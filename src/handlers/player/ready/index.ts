@@ -1,8 +1,9 @@
 import IHandler from '../../../models/interfaces/IHandler';
 import IMessage from '../../../models/interfaces/IMessage';
 import IResponse from '../../../models/interfaces/IResponse';
-import players from '../../../services/Players';
 import stage, { stages } from '../../../services/Stage';
+import players from '../../../services/Players';
+import playersReady from '../../../services/players/players-ready/PlayersReady';
 
 export default class Ready implements IHandler {
   handle = async (message: IMessage): Promise<IResponse> => {
@@ -46,7 +47,8 @@ export default class Ready implements IHandler {
       };
       return response;
     }
-    players.changeReady(message.payload.id, message.payload.ready);
+
+    playersReady.changeReady(message.payload.id, message.payload.ready);
 
     const response: IResponse = {
       response: {

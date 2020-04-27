@@ -1,4 +1,4 @@
-import players from '../../services/Players';
+import players from '../../services/players/Players';
 import stage, { stages } from '../../services/Stage';
 
 export default class Stages {

@@ -2,25 +2,14 @@ import TPlayers from '../models/types/TPlayers';
 import IPlayer from '../models/interfaces/IPlayer';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import words from './Words';
 
 class Players {
   private minimumPlayers = 2;
   private maximumPlayers = 4;
   private players: BehaviorSubject<TPlayers>;
-  // private playersHaveWords: boolean;
-  // private winner: string | null;
   constructor() {
     this.players = new BehaviorSubject(new Map());
-    // this.playersHaveWords = false;
-    // this.winner = null;
   }
-
-  public isFull = (): boolean =>
-    this.players.getValue().size >= this.maximumPlayers;
-
-  public exists = (token: string): boolean =>
-    this.players.getValue().has(token);
 
   public add = (player: IPlayer): void => {
     if (this.isFull()) {
@@ -29,6 +18,19 @@ class Players {
     this.players.getValue().set(player.id, player);
     this.players.next(this.players.getValue());
   };
+
+  public edit = (player: IPlayer): void => {
+    if (!this.exists(player.id)) {
+      throw new Error('player not found');
+    }
+    this.players.getValue().set(player.id, player);
+  };
+
+  public isFull = (): boolean =>
+    this.players.getValue().size >= this.maximumPlayers;
+
+  public exists = (token: string): boolean =>
+    this.players.getValue().has(token);
 
   public allReqiredReady = (): Observable<boolean> =>
     this.observeStatuses().pipe(

@@ -2,7 +2,7 @@ import IHandler from '../../models/interfaces/IHandler';
 import { Subject } from 'rxjs';
 import IResponse from '../../models/interfaces/IResponse';
 import IMessage from '../../models/interfaces/IMessage';
-import players from '../../services/Players';
+import players from '../../services/players/Players';
 
 class AuthCheck implements IHandler {
   static type = 'autch_check';

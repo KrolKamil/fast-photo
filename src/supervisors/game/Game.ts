@@ -1,21 +1,23 @@
 import stage, { stages } from '../../services/Stage';
-import players from '../../services/Players';
+import playersReady from '../../services/players/players-ready/PlayersReady';
 
 class Game {
   private eventBus: Subject<Array<IResponse>>;
 
   constructor(eventBus: Subject<Array<IResponse>>) {
     this.eventBus = eventBus;
-    players.allReqiredReady().subscribe(this.startGameManager);
+    playersReady.allReqiredReady().subscribe(this.startManager);
   }
 
-  private startGameManager = (allPlayersReady: boolean): void => {
-    if (allPlayersReady && stage.current() !== stages.GAME) {
+  private startManager = (allPlayersReady: boolean): void => {
+    if (allPlayersReady && stage.current() === stages.AWAITING_FOR_PLAYERS) {
       this.startGame();
     }
   };
 
-  private startGame = (): void => {};
+  private start = (): void => {
+    stage.set(stages.GAME);
+  };
 }
 
 export default Game;

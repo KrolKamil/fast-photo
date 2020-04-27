@@ -1,6 +1,6 @@
 import stage, { stages } from '../../services/Stage';
 import IMessage from '../../models/interfaces/IMessage';
-import players from '../../services/Players';
+import players from '../../services/players/Players';
 
 export default class PlayerReady implements IHandler {
   static type = 'player_ready';
