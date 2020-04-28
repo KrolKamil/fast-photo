@@ -2,11 +2,8 @@ import { Subject } from 'rxjs';
 import IHandler from '../../models/interfaces/IHandler';
 import IResponse from '../../models/interfaces/IResponse';
 import stage, { stages } from '../../services/Stage';
-import Player from '../../models/Player';
 import IMessage from '../../models/interfaces/IMessage';
 import players from '../../services/players/Players';
-import identificator from '../../services/Identificator';
-import playersWords from '../../services/players/players-words/PlayersWords';
 import { base64ToBuffer } from '../../utils';
 import detectLables from '../../api/label';
 
