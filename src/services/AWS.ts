@@ -11,9 +11,7 @@ class AmazonWebServices {
     this.client = null;
   };
 
-  isOperating = (): boolean => {
-    return this.client === null ? false : true;
-  };
+  isOperating = (): boolean => (this.client === null ? false : true);
 
   loadConfig = (config: IAWSConfig): void => {
     AWS.config.update(

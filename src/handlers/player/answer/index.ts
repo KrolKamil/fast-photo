@@ -88,4 +88,3 @@ export default class Answer implements IHandler {
       throw new Error(e.message);
     }
   };
-}
