@@ -32,24 +32,24 @@ class Players {
   public exists = (token: string): boolean =>
     this.players.getValue().has(token);
 
-  public allReqiredReady = (): Observable<boolean> =>
-    this.observeStatuses().pipe(
-      map(
-        (statuses) =>
-          !statuses.includes(false) && statuses.length >= this.minimumPlayers
-      )
-    );
+  // public allReqiredReady = (): Observable<boolean> =>
+  //   this.observeStatuses().pipe(
+  //     map(
+  //       (statuses) =>
+  //         !statuses.includes(false) && statuses.length >= this.minimumPlayers
+  //     )
+  //   );
 
-  private observeStatuses = (): Observable<Array<boolean>> =>
-    this.players.asObservable().pipe(
-      map((Players) => {
-        const statuses: Array<boolean> = [];
-        Players.forEach((player) => {
-          statuses.push(player.ready);
-        });
-        return statuses;
-      })
-    );
+  // private observeStatuses = (): Observable<Array<boolean>> =>
+  //   this.players.asObservable().pipe(
+  //     map((Players) => {
+  //       const statuses: Array<boolean> = [];
+  //       Players.forEach((player) => {
+  //         statuses.push(player.ready);
+  //       });
+  //       return statuses;
+  //     })
+  //   );
 
   // changeReady = (id: string, ready: boolean) => {
   //   const player = this.players.getValue().get(id);

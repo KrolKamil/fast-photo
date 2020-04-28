@@ -7,6 +7,9 @@ import Handlers from './handlers/Handlers';
 import eventBus from './services/eventBus';
 import AuthWelcome from './handlers/auth-welcome/AuthWelcome';
 import AuthCheck from './handlers/auth-check/AuthCheck';
+import Game from './supervisors/game/Game';
+
+const game = new Game();
 
 const handlers = new Handlers({
   [AuthWelcome.type]: new AuthWelcome(eventBus),
