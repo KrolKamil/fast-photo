@@ -2,12 +2,14 @@ import { Subject } from 'rxjs';
 import IHandler from '../../models/interfaces/IHandler';
 import IResponse from '../../models/interfaces/IResponse';
 import stage, { stages } from '../../services/Stage';
+import Player from '../../models/Player';
 import IMessage from '../../models/interfaces/IMessage';
 import players from '../../services/players/Players';
+import identificator from '../../services/Identificator';
 import playersWords from '../../services/players/players-words/PlayersWords';
 
-class PlayerWord implements IHandler {
-  static type = 'player_word';
+class PlayerAnswer implements IHandler {
+  static type = 'player_answer';
   private eventBus: Subject<Array<IResponse>>;
 
   constructor(eventBus: Subject<Array<IResponse>>) {
@@ -19,9 +21,9 @@ class PlayerWord implements IHandler {
       const response: IResponse = {
         ws: message.ws,
         message: {
-          type: 'player_word-error',
+          type: 'player_answer-error',
           payload: {
-            error: 'Wrong stage. Words are not loaded yet'
+            error: 'Wrong stage.'
           }
         }
       };
@@ -29,13 +31,17 @@ class PlayerWord implements IHandler {
       return;
     }
 
-    if (!message.payload || !message.payload.playerId) {
+    if (
+      !message.payload ||
+      !message.payload.playerId ||
+      !message.payload.answer
+    ) {
       const response: IResponse = {
         ws: message.ws,
         message: {
-          type: 'player_word-error',
+          type: 'player_answer-error',
           payload: {
-            error: 'Missing playerId'
+            error: 'playerId and anser are required'
           }
         }
       };
@@ -47,28 +53,16 @@ class PlayerWord implements IHandler {
       const response: IResponse = {
         ws: message.ws,
         message: {
-          type: 'player_word-error',
+          type: 'player_answer-error',
           payload: {
-            error: 'Wrong playerId'
+            error: 'Player of this id does not exist'
           }
         }
       };
       this.eventBus.next([response]);
       return;
     }
-
-    const response: IResponse = {
-      ws: message.ws,
-      message: {
-        type: 'player_word',
-        payload: {
-          word: playersWords.getPlayerWord(message.payload.playerId)
-        }
-      }
-    };
-    this.eventBus.next([response]);
-    return;
   };
 }
 
-export default PlayerWord;
+export default PlayerAnswer;
