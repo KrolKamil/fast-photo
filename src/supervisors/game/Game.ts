@@ -5,6 +5,7 @@ import playersWords from '../../services/players/players-words/PlayersWords';
 class Game {
   constructor() {
     playersReady.allReqiredReady().subscribe(this.startManager);
+    stage.observe().subscribe(this.handleGameEnd);
   }
 
   private startManager = (allPlayersReady: boolean): void => {
@@ -18,6 +19,8 @@ class Game {
     playersWords.setPlayersWords();
     await playersWords.sendWordsToPlayers();
   };
+
+  private handleGameEnd = () => {};
 }
 
 export default Game;

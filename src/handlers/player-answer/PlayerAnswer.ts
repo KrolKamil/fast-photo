@@ -6,6 +6,7 @@ import IMessage from '../../models/interfaces/IMessage';
 import players from '../../services/players/Players';
 import { base64ToBuffer } from '../../utils';
 import detectLables from '../../api/label';
+import playersWords from '../../services/players/players-words/PlayersWords';
 
 class PlayerAnswer implements IHandler {
   static type = 'player_answer';
@@ -40,7 +41,7 @@ class PlayerAnswer implements IHandler {
         message: {
           type: 'player_answer-error',
           payload: {
-            error: 'playerId and anser are required'
+            error: 'playerId and answer are required'
           }
         }
       };
@@ -63,8 +64,37 @@ class PlayerAnswer implements IHandler {
     }
 
     try {
-      if (this.isAnswerCorrect(message.payload.answer)) {
-        console.log('winner');
+      if (
+        this.isAnswerCorrect(message.payload.answer, message.payload.playerId)
+      ) {
+        const responses: Array<IResponse>;
+        players.getAll().forEach((player) => {
+          const response: IResponse = {
+            ws: player.ws,
+            message: {
+              type: 'game_over',
+              payload: {
+                winner: player.id
+              }
+            }
+          };
+          responses.push(response);
+        });
+        this.eventBus.next([responses]);
+        stage.change(stages.GAME_OVER);
+        return;
+      } else {
+        const response: IResponse = {
+          ws: message.ws,
+          message: {
+            type: 'player_answer-wrong',
+            payload: {
+              message: 'wrong answer'
+            }
+          }
+        };
+        this.eventBus.next([response]);
+        return;
       }
     } catch (e) {
       const response: IResponse = {
@@ -81,17 +111,17 @@ class PlayerAnswer implements IHandler {
     }
   };
 
-  private isAnswerCorrect = (answer: any): boolean => {
+  private isAnswerCorrect = (answer: any, playerId: string): boolean => {
+    const playerWord = playersWords.getPlayerWord(playerId);
     const buffer = base64ToBuffer(answer);
     const detected = await detectLables(buffer);
     if (detected.Labels) {
-      detected.Labels.forEach((label: any) => {
-        if (label.Confidence) {
-          if (label.Name === playerWord && label.Confidence >= 0.98) {
-            return true;
-          }
-        }
-      });
+      const findedWord = detected.Labels.find(
+        (label: any) => label.Name === playerWord && label.Confidence >= 0.98
+      );
+      if (findedWord) {
+        return true;
+      }
     }
     return false;
   };
