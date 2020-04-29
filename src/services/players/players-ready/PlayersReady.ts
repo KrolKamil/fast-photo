@@ -1,10 +1,12 @@
 import players from '../Players';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 class PlayersReady {
   public changeReady = (id: string, ready: boolean): void => {
     const player = players.get(id);
     player.ready = ready;
-    players.edit(player.id, player);
+    players.edit(player);
   };
 
   public allReqiredReady = (): Observable<boolean> =>
@@ -16,10 +18,10 @@ class PlayersReady {
     );
 
   private observeStatuses = (): Observable<Array<boolean>> =>
-    players.asObservable().pipe(
-      map((Players) => {
+    players.observe().pipe(
+      map((Players: any) => {
         const statuses: Array<boolean> = [];
-        Players.forEach((player) => {
+        Players.forEach((player: any) => {
           statuses.push(player.ready);
         });
         return statuses;

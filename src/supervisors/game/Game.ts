@@ -11,12 +11,12 @@ class Game {
 
   private handleGameStart = (allPlayersReady: boolean): void => {
     if (allPlayersReady && stage.current() === stages.AWAITING_FOR_PLAYERS) {
-      this.startGame();
+      this.start();
     }
   };
 
-  private start = async (): void => {
-    stage.set(stages.GAME);
+  private start = async (): Promise<void> => {
+    stage.change(stages.GAME);
     playersWords.setPlayersWords();
     await playersWords.sendWordsToPlayers();
   };

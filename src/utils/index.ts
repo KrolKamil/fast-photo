@@ -1,6 +1,7 @@
 import stage from '../services/Stage';
 import players from '../services/players/Players';
 import playersWords from '../services/players/players-words/PlayersWords';
+import amazonWebServices from '../services/AWS';
 
 export const parseJsonAsync = (jsonString: string) => {
   return new Promise((resolve) => {

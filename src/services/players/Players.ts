@@ -28,10 +28,11 @@ class Players {
   };
 
   public get = (playerId: string): IPlayer => {
-    if (!this.exists(playerId)) {
+    const player = this.players.getValue().get(playerId);
+    if (!player) {
       throw new Error('player not found');
     }
-    this.players.getValue().get(playerId);
+    return player;
   };
 
   public observe = (): Observable<TPlayers> => this.players.asObservable();

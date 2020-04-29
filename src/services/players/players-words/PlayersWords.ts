@@ -2,6 +2,7 @@ import words from '../../Words';
 import players from '../Players';
 import IPlayer from '../../../models/interfaces/IPlayer';
 import eventBus from '../../eventBus';
+import IResponse from '../../../models/interfaces/IResponse';
 
 class PlayersWords {
   private wordsAreSet: boolean;
@@ -21,12 +22,12 @@ class PlayersWords {
     const allPlayers = players.getAll();
     allPlayers.forEach((player: IPlayer) => {
       player.word = words.getRandomWord();
-      players.edit(player.id, player);
+      players.edit(player);
     });
   };
 
-  public sendWordsToPlayers = (): Promise<void> => {
-    const responses: Array<IResponse>;
+  public sendWordsToPlayers = (): void => {
+    const responses: Array<IResponse> = [];
     players.getAll().forEach((player) => {
       const response: IResponse = {
         ws: player.ws,

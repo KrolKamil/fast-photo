@@ -10,6 +10,7 @@ import cors from 'cors';
 import { resetEverything, resetSocket } from './utils';
 import IAWSConfig from './models/interfaces/IAWSConfig';
 import amazonWebServices from './services/AWS';
+import path from 'path';
 
 const corsOptions = {
   origin: true,
@@ -26,6 +27,8 @@ const server = (): Express => {
       message: error.toString() || 'unknown error'
     });
   });
+
+  app.use(express.static(path.join(__dirname, 'public')));
 
   app.get('/reset/all', (req, res) => {
     resetEverything();
