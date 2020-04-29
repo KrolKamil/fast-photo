@@ -7,7 +7,7 @@ import express, {
 } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import { resetEverything } from './utils';
+import { resetEverything, resetSocket } from './utils';
 import IAWSConfig from './models/interfaces/IAWSConfig';
 import amazonWebServices from './services/AWS';
 
@@ -27,10 +27,16 @@ const server = (): Express => {
     });
   });
 
-  app.get('/reset', (req, res) => {
+  app.get('/reset/all', (req, res) => {
     resetEverything();
     const timeNow = new Date();
-    res.send(`Server has been restarted at: ${timeNow}`);
+    res.send(`Server restarted all at: ${timeNow}`);
+  });
+
+  app.get('/reset/socket', (req, res) => {
+    resetSocket();
+    const timeNow = new Date();
+    res.send(`Server restarted socket at: ${timeNow}`);
   });
 
   app.get('/', (req, res) => {
