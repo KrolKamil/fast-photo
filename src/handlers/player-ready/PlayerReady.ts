@@ -71,11 +71,14 @@ export default class PlayerReady implements IHandler {
     players.changeReady(message.payload.id, message.payload.ready);
 
     const response: IResponse = {
-      response: {
-        type: 'player_ready-success'
-      },
-      to: 'player'
+      ws: message.ws,
+      message: {
+        type: 'player_ready-success',
+        payload: {
+          ready: message.payload.ready
+        }
+      }
     };
-    return response;
+    this.eventBus.next([response]);
   };
 }

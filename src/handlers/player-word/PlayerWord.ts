@@ -29,13 +29,13 @@ class PlayerWord implements IHandler {
       return;
     }
 
-    if (!message.payload || !message.payload.playerId) {
+    if (!message.payload || !message.payload.id) {
       const response: IResponse = {
         ws: message.ws,
         message: {
           type: 'player_word-error',
           payload: {
-            error: 'Missing playerId'
+            error: 'Missing player Id'
           }
         }
       };
@@ -43,13 +43,13 @@ class PlayerWord implements IHandler {
       return;
     }
 
-    if (!players.exists(message.payload.playerId)) {
+    if (!players.exists(message.payload.id)) {
       const response: IResponse = {
         ws: message.ws,
         message: {
           type: 'player_word-error',
           payload: {
-            error: 'Wrong playerId'
+            error: 'Wrong player id'
           }
         }
       };
@@ -62,7 +62,7 @@ class PlayerWord implements IHandler {
       message: {
         type: 'player_word',
         payload: {
-          word: playersWords.getPlayerWord(message.payload.playerId)
+          word: playersWords.getPlayerWord(message.payload.id)
         }
       }
     };

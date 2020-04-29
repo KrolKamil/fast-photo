@@ -31,17 +31,13 @@ class PlayerAnswer implements IHandler {
       return;
     }
 
-    if (
-      !message.payload ||
-      !message.payload.playerId ||
-      !message.payload.answer
-    ) {
+    if (!message.payload || !message.payload.id || !message.payload.answer) {
       const response: IResponse = {
         ws: message.ws,
         message: {
           type: 'player_answer-error',
           payload: {
-            error: 'playerId and answer are required'
+            error: 'player id and answer are required'
           }
         }
       };
@@ -49,7 +45,7 @@ class PlayerAnswer implements IHandler {
       return;
     }
 
-    if (!players.exists(message.payload.playerId)) {
+    if (!players.exists(message.payload.id)) {
       const response: IResponse = {
         ws: message.ws,
         message: {
@@ -64,9 +60,7 @@ class PlayerAnswer implements IHandler {
     }
 
     try {
-      if (
-        this.isAnswerCorrect(message.payload.answer, message.payload.playerId)
-      ) {
+      if (this.isAnswerCorrect(message.payload.answer, message.payload.id)) {
         const responses: Array<IResponse>;
         players.getAll().forEach((player) => {
           const response: IResponse = {
@@ -111,8 +105,8 @@ class PlayerAnswer implements IHandler {
     }
   };
 
-  private isAnswerCorrect = (answer: any, playerId: string): boolean => {
-    const playerWord = playersWords.getPlayerWord(playerId);
+  private isAnswerCorrect = (answer: any, id: string): boolean => {
+    const playerWord = playersWords.getPlayerWord(id);
     const buffer = base64ToBuffer(answer);
     const detected = await detectLables(buffer);
     if (detected.Labels) {
