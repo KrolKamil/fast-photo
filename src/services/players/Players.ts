@@ -42,6 +42,10 @@ class Players {
   public exists = (id: string): boolean => this.players.getValue().has(id);
 
   public getAll = (): TPlayers => this.players.getValue();
+
+  public reset = (): void => {
+    this.players.next(new Map());
+  };
 }
 
 const players = new Players();

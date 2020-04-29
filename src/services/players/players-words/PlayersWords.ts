@@ -9,6 +9,10 @@ class PlayersWords {
     this.wordsAreSet = false;
   }
 
+  public reset = (): void => {
+    this.wordsAreSet = false;
+  };
+
   setPlayersWords = (): void => {
     if (this.wordsAreSet) {
       throw new Error('words are already set');

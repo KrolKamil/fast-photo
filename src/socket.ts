@@ -8,33 +8,53 @@ import eventBus from './services/eventBus';
 import AuthWelcome from './handlers/auth-welcome/AuthWelcome';
 import AuthCheck from './handlers/auth-check/AuthCheck';
 import Game from './supervisors/game/Game';
+import amazonWebServices from './services/AWS';
+import PlayerAnswer from './handlers/player-answer/PlayerAnswer';
+import PlayerReady from './handlers/player-ready/PlayerReady';
+import PlayerWord from './handlers/player-word/PlayerWord';
+import StageCurrent from './handlers/stage-current/StageCurrent';
 
 const game = new Game();
 
 const handlers = new Handlers({
   [AuthWelcome.type]: new AuthWelcome(eventBus),
-  [AuthCheck.type]: new AuthCheck(eventBus)
+  [AuthCheck.type]: new AuthCheck(eventBus),
+  [PlayerAnswer.type]: new PlayerAnswer(eventBus),
+  [PlayerReady.type]: new PlayerReady(eventBus),
+  [PlayerWord.type]: new PlayerWord(eventBus),
+  [StageCurrent.type]: new StageCurrent(eventBus)
 });
 
 const socket = (server: Server): void => {
   const wss: WebSocket.Server = new WebSocket.Server({ server });
   wss.on('connection', (ws) => {
-    ws.on('message', async (message: string) => {
-      try {
-        const parsedMessage = await parseJsonAsync(message);
-        const updatedMessage = messageCreator(parsedMessage, ws);
-        handlers.handle(updatedMessage);
-      } catch (e) {
-        ws.send(
-          JSON.stringify({
-            type: 'error_internal',
-            payload: {
-              error: e.message
-            }
-          })
-        );
-      }
-    });
+    if (amazonWebServices.isOperating()) {
+      ws.on('message', async (message: string) => {
+        try {
+          const parsedMessage = await parseJsonAsync(message);
+          const updatedMessage = messageCreator(parsedMessage, ws);
+          handlers.handle(updatedMessage);
+        } catch (e) {
+          ws.send(
+            JSON.stringify({
+              type: 'error_internal',
+              payload: {
+                error: e.message
+              }
+            })
+          );
+        }
+      });
+    } else {
+      ws.send(
+        JSON.stringify({
+          type: 'error_iternal',
+          payload: {
+            message: 'SERVER DOES NOT RECIVED AWS KEYS'
+          }
+        })
+      );
+    }
   });
 };
 

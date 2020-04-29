@@ -6,6 +6,7 @@ const runningPort = process.env.PORT || 3000;
 
 const app = (): void => {
   const app = createServer(server());
+
   socket(app);
 
   app.listen(runningPort, () => {

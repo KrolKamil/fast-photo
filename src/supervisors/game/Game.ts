@@ -1,6 +1,7 @@
 import stage, { stages } from '../../services/Stage';
 import playersReady from '../../services/players/players-ready/PlayersReady';
 import playersWords from '../../services/players/players-words/PlayersWords';
+import { resetSocket } from '../../utils';
 
 class Game {
   constructor() {
@@ -20,7 +21,9 @@ class Game {
     await playersWords.sendWordsToPlayers();
   };
 
-  private handleGameEnd = () => {};
+  private handleGameEnd = (): void => {
+    resetSocket();
+  };
 }
 
 export default Game;
