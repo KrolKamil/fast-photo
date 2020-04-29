@@ -4,11 +4,11 @@ import playersWords from '../../services/players/players-words/PlayersWords';
 
 class Game {
   constructor() {
-    playersReady.allReqiredReady().subscribe(this.startManager);
+    playersReady.allReqiredReady().subscribe(this.handleGameStart);
     stage.observe().subscribe(this.handleGameEnd);
   }
 
-  private startManager = (allPlayersReady: boolean): void => {
+  private handleGameStart = (allPlayersReady: boolean): void => {
     if (allPlayersReady && stage.current() === stages.AWAITING_FOR_PLAYERS) {
       this.startGame();
     }
