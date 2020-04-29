@@ -21,8 +21,10 @@ class Game {
     await playersWords.sendWordsToPlayers();
   };
 
-  private handleGameEnd = (): void => {
-    resetSocket();
+  private handleGameEnd = (currentStage: string): void => {
+    if (currentStage === stages.GAME_OVER) {
+      resetSocket();
+    }
   };
 }
 

@@ -1,6 +1,10 @@
 import stage, { stages } from '../../services/Stage';
 import IMessage from '../../models/interfaces/IMessage';
 import players from '../../services/players/Players';
+import IResponse from '../../models/interfaces/IResponse';
+import IHandler from '../../models/interfaces/IHandler';
+import { Subject } from 'rxjs';
+import playersReady from '../../services/players/players-ready/PlayersReady';
 
 export default class PlayerReady implements IHandler {
   static type = 'player_ready';
@@ -10,7 +14,7 @@ export default class PlayerReady implements IHandler {
     this.eventBus = eventBus;
   }
 
-  handle = async (message: IMessage): void => {
+  handle = async (message: IMessage): Promise<void> => {
     if (stage.current() !== stages.AWAITING_FOR_PLAYERS) {
       const response: IResponse = {
         ws: message.ws,
@@ -68,7 +72,7 @@ export default class PlayerReady implements IHandler {
       return;
     }
 
-    players.changeReady(message.payload.id, message.payload.ready);
+    playersReady.changeReady(message.payload.id, message.payload.ready);
 
     const response: IResponse = {
       ws: message.ws,
