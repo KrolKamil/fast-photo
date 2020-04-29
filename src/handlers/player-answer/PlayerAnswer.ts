@@ -16,7 +16,7 @@ class PlayerAnswer implements IHandler {
     this.eventBus = eventBus;
   }
 
-  handle = (message: IMessage): void => {
+  handle = async (message: IMessage): Promise<void> => {
     if (stage.current() !== stages.GAME) {
       const response: IResponse = {
         ws: message.ws,
@@ -60,8 +60,12 @@ class PlayerAnswer implements IHandler {
     }
 
     try {
-      if (this.isAnswerCorrect(message.payload.answer, message.payload.id)) {
-        const responses: Array<IResponse>;
+      const isCorrect = await this.isAnswerCorrect(
+        message.payload.answer,
+        message.payload.id
+      );
+      if (isCorrect) {
+        const responses: Array<IResponse> = [];
         players.getAll().forEach((player) => {
           const response: IResponse = {
             ws: player.ws,
@@ -74,7 +78,7 @@ class PlayerAnswer implements IHandler {
           };
           responses.push(response);
         });
-        this.eventBus.next([responses]);
+        this.eventBus.next(responses);
         stage.change(stages.GAME_OVER);
         return;
       } else {
@@ -105,7 +109,10 @@ class PlayerAnswer implements IHandler {
     }
   };
 
-  private isAnswerCorrect = (answer: any, id: string): boolean => {
+  private isAnswerCorrect = async (
+    answer: any,
+    id: string
+  ): Promise<boolean> => {
     const playerWord = playersWords.getPlayerWord(id);
     const buffer = base64ToBuffer(answer);
     const detected = await detectLables(buffer);
