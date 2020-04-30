@@ -10,12 +10,16 @@ class Game {
   }
 
   private handleGameStart = (allPlayersReady: boolean): void => {
+    console.log('handle game start');
+    console.log(allPlayersReady);
+    console.log(stage.current());
     if (allPlayersReady && stage.current() === stages.AWAITING_FOR_PLAYERS) {
       this.start();
     }
   };
 
   private start = async (): Promise<void> => {
+    console.log('starting game');
     stage.change(stages.GAME);
     playersWords.setPlayersWords();
     await playersWords.sendWordsToPlayers();

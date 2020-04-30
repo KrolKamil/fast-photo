@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TESTING</title>
+  <style>
+    body {
+      background-color: grey;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Client Simulator</h2>
+
+  Select file
+
+  <input type="file" id="myFile" />
+  <script>
+    let id = null;
+    const socket = new WebSocket('ws://localhost:3000');
+
+    const processImage = (e) => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.addEventListener('load', (e) => {
+        const rawData = e.target.result.split("data:image/png;base64,")[1];
+        socket.send(JSON.stringify({
+          type: 'player_answer',
+          payload: {
+            answer: rawData,
+            id
+          }
+        }));
+      });
+      reader.readAsDataURL(file);
+    }
+
+    document.getElementById("myFile").addEventListener("change", processImage, false);
+
+
+    socket.addEventListener('open', (e) => {
+      socket.send(JSON.stringify({
+        type: 'auth_welcome',
+        payload: {}
+      }));
+    });
+    socket.addEventListener('message', async (message) => {
+      const div = document.createElement('div');
+      div.innerText = message.data;
+      document.body.appendChild(div);
+      const parsedMessage = await JSON.parse(message.data);
+      if (parsedMessage.type === 'auth_welcome-success') {
+        id = parsedMessage.payload.id;
+        socket.send(JSON.stringify({
+          type: 'player_ready',
+          payload: {
+            id: parsedMessage.payload.id,
+            ready: true
+          }
+        }));
+      }
+    })
+  </script>
+</body>
+
+</html>
