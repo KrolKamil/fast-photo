@@ -17,7 +17,7 @@ class PlayersReady {
       )
     );
 
-  public observeStatuses = (): Observable<Array<boolean>> =>
+  private observeStatuses = (): Observable<Array<boolean>> =>
     players.observe().pipe(
       map((Players: any) => {
         const statuses: Array<boolean> = [];

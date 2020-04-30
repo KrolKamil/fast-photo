@@ -43,7 +43,13 @@ class PlayersWords {
     eventBus.next(responses);
   };
 
-  getPlayerWord = (playerId: string): string => players.get(playerId).id;
+  getPlayerWord = (playerId: string): string => {
+    const word = players.get(playerId).word;
+    if (!word) {
+      throw new Error('Player does not have word');
+    }
+    return word;
+  }
 }
 
 const playersWords = new PlayersWords();

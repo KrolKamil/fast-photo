@@ -116,7 +116,12 @@ class PlayerAnswer implements IHandler {
     const playerWord = playersWords.getPlayerWord(id);
     const buffer = base64ToBuffer(answer);
     const detected = await detectLables(buffer);
+    console.log(playerWord);
     if (detected.Labels) {
+      detected.Labels.forEach((label: any) => {
+        console.log(label.Name);
+        console.log(label.Confidence);
+      })
       const findedWord = detected.Labels.find(
         (label: any) => label.Name === playerWord && label.Confidence >= 0.98
       );
