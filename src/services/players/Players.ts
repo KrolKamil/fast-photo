@@ -25,6 +25,7 @@ class Players {
       throw new Error('player not found');
     }
     this.players.getValue().set(player.id, player);
+    this.players.next(this.players.getValue());
   };
 
   public get = (playerId: string): IPlayer => {

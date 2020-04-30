@@ -7,6 +7,7 @@ class Game {
   constructor() {
     playersReady.allReqiredReady().subscribe(this.handleGameStart);
     stage.observe().subscribe(this.handleGameEnd);
+    playersReady.observeStatuses().subscribe((a: any) => console.log(a))
   }
 
   private handleGameStart = (allPlayersReady: boolean): void => {
