@@ -23,6 +23,7 @@ const server = () => {
             message: error.toString() || 'unknown error'
         });
     });
+    console.log(path_1.default.join(__dirname, 'public'));
     app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
     app.get('/reset/all', (req, res) => {
         utils_1.resetEverything();
