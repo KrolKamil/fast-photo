@@ -8,7 +8,7 @@
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "dev": "nodemon src/app.ts",
     "lint": "eslint . --ext .ts",
-    "build": "tsc -p ."
+    "build": "tsc -p . && cp -r ./src/public/ ./dist/public/"
   },
   "author": "",
   "license": "ISC",
