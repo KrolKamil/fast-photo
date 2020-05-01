@@ -22,6 +22,7 @@ const handlers = new Handlers({
   [PlayerAnswer.type]: new PlayerAnswer(eventBus),
   [PlayerReady.type]: new PlayerReady(eventBus),
   [PlayerWord.type]: new PlayerWord(eventBus),
+  [PlayerWord.type]: new PlayerWord(eventBus),
   [StageCurrent.type]: new StageCurrent(eventBus)
 });
 
