@@ -17,10 +17,17 @@ Server sends winner information to all players.
     
 # HTTP API
 
-### Restart
-Restart whole server(usefeull if you lose player id)
+### Reset socket
+Restart web socket(usefeull if you lose player id)
+(does not restert AWS keys)
 ```http
-GET /restart
+GET /reset/socket
+```
+
+### Reset server
+Restart whole server - socket and AWS keys
+```http
+GET /reset/all
 ```
 
 ### Load
@@ -45,6 +52,14 @@ Example:
 }
 ```
 
+#### Load HTML client
+Server provides client for loading AWS keys:
+"server address"/html
+
+Keys you can get from:
+https://www.awseducate.com/signin/SiteLogin -> Login -> My Classroms -> Go to classroom -> Continue -> Account Details -> Show.
+Copy everything from gray background and paste to textfield in "server address"/html
+
 ### WebSocket
 All requests MUST be JSON type
 Boilerplate for any request:
@@ -58,7 +73,7 @@ Boilerplate for any request:
 ```
 
 ## Auth
-### welcome
+### welcome (stage 1)
 Fetch user id which allows to participate in game.
 ```
 {
@@ -75,23 +90,31 @@ Valid response example:
     }
 ```
 
-You can also send back id to check if it's valid 
-Example request:
+### check (stage any)
+Allow check if user id is valid
 ```
 {
-    type: 'auth_welcome',
+    type: 'auth_check',
     payload: {
-        "id":"1a31483e-35c1-4034-a98f-23ad369bb3a2"
+        id: 'user id'
     }
 }
+```
+Valid response example:
+```
+    {"type":"auth_welcome-success",
+        "payload":{
+        "id":"1a31483e-35c1-4034-a98f-23ad369bb3a2"
+        }
+    }
 ```
 
 
 # Player
 
-## ready
+## ready (stage 1)
 
-Allows to change player ready status (only in stage 1)
+Allow to change player ready status (only in stage 1)
 (when at least two players send ready(true) status game starts)
 Request example
 ```
@@ -104,7 +127,34 @@ Request example
 }
 ```
 
-## answer
+## name (stage 1)
+
+Allow to change player name (only in stage 1)
+
+Request example
+```
+{
+    type: 'player_name',
+    payload: {
+        id: 'player id(u can fetch it by ws request auth_welcome'),
+        name: 'abc'
+    }
+}
+```
+
+## word (stage 2)
+Allow palyer to fetch once again his word
+Request example
+```
+{
+    type: 'player_word',
+    payload: {
+        id: 'player id(u can fetch it by ws request auth_welcome')
+    }
+}
+```
+
+## answer (stage 2)
 Allows player to send img to try win the game.
 Server MUST receive "rawdata" to "see" image.
 Code to generate RAWDAT: 
@@ -135,6 +185,34 @@ type: 'player_answer',
     payload: {
       answer: RAWDATA,
       id: (player ID)
+    }
+}
+```
+
+## Server peers notifications
+
+### Game starts
+When game start server will send players words.
+Example
+
+```
+{
+type: 'player_word',
+    payload: {
+      word: 'Person'
+    }
+}
+```
+
+### Game over
+When palyer sends correct photo server will notify all players about winner.
+
+```
+{
+type: 'game_over',
+    payload: {
+      winner: 'playerId',
+      name: 'player name'
     }
 }
 ```
