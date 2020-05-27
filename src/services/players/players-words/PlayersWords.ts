@@ -49,7 +49,7 @@ class PlayersWords {
       throw new Error('Player does not have word');
     }
     return word;
-  }
+  };
 }
 
 const playersWords = new PlayersWords();

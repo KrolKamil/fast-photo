@@ -13,8 +13,10 @@ import PlayerAnswer from './handlers/player-answer/PlayerAnswer';
 import PlayerReady from './handlers/player-ready/PlayerReady';
 import PlayerWord from './handlers/player-word/PlayerWord';
 import StageCurrent from './handlers/stage-current/StageCurrent';
+import Inform from './supervisors/inform/Inform';
 
 const game = new Game();
+const inform = new Inform();
 
 const handlers = new Handlers({
   [AuthWelcome.type]: new AuthWelcome(eventBus),
@@ -51,7 +53,7 @@ const socket = (server: Server): void => {
         JSON.stringify({
           type: 'error_iternal',
           payload: {
-            message: 'SERVER DOES NOT RECIVED AWS KEYS'
+            message: 'SERVER DOES NOT RECIVE AWS KEYS'
           }
         })
       );
