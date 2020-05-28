@@ -1,6 +1,5 @@
 import eventBus from '../../services/eventBus';
 import IResponse from '../../models/interfaces/IResponse';
-import stage, { stages } from '../../services/Stage';
 import playersPublic, {
   PlayerPublicInformation
 } from '../../services/players/players-public/PlayersPublic';
@@ -10,19 +9,17 @@ class Inform {
   constructor(
     private notifyInterval: NodeJS.Timeout | null = null
   ) {
-    this.notifyInterval = this.startNotifiInterval();
     playersPublic.observe().subscribe(this.sendPlayersInformations);
     this.startNotifiInterval();
   }
 
-  public startNotifiInterval = () => this.notifyInterval = setTimeout(players.poke, 15000);
+  public startNotifiInterval = () => this.notifyInterval = setInterval(players.poke, 15000);
   public stopNotifyInterval = () => this.notifyInterval !== null ? clearInterval(this.notifyInterval) : null;
 
   private sendPlayersInformations = (
     playersInformation: PlayerPublicInformation[]
   ): void => {
     if (
-      stage.current() === stages.AWAITING_FOR_PLAYERS &&
       playersInformation.length > 0
     ) {
       const responses: Array<IResponse> = [];
