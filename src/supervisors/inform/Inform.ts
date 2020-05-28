@@ -7,9 +7,16 @@ import playersPublic, {
 import players from '../../services/players/Players';
 
 class Inform {
-  constructor() {
+  constructor(
+    private notifyInterval: NodeJS.Timeout | null = null
+  ) {
+    this.notifyInterval = this.startNotifiInterval();
     playersPublic.observe().subscribe(this.sendPlayersInformations);
+    this.startNotifiInterval();
   }
+
+  public startNotifiInterval = () => this.notifyInterval = setTimeout(players.poke, 15000);
+  public stopNotifyInterval = () => this.notifyInterval !== null ? clearInterval(this.notifyInterval) : null;
 
   private sendPlayersInformations = (
     playersInformation: PlayerPublicInformation[]

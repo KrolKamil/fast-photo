@@ -12,12 +12,14 @@ class Players {
     this.players = new BehaviorSubject(new Map());
   }
 
+  public poke = () => this.players.next(this.players.getValue());
+
   public add = (player: IPlayer): void => {
     if (this.isFull()) {
       throw new Error('no more space for new player');
     }
     this.players.getValue().set(player.id, player);
-    this.players.next(this.players.getValue());
+    this.poke();
   };
 
   public edit = (player: IPlayer): void => {
@@ -25,7 +27,7 @@ class Players {
       throw new Error('player not found');
     }
     this.players.getValue().set(player.id, player);
-    this.players.next(this.players.getValue());
+    this.poke();
   };
 
   public get = (playerId: string): IPlayer => {
