@@ -4,7 +4,7 @@ import IMessage from "../../models/interfaces/IMessage";
 import IHandler from "../../models/interfaces/IHandler";
 import players from "../../services/players/Players";
 
-class PlayerPing implements IHandler {
+export default class PlayerPing implements IHandler {
   static type = 'player_ping';
   constructor(
     private eventBus: Subject<Array<IResponse>>

@@ -14,6 +14,7 @@ import PlayerReady from './handlers/player-ready/PlayerReady';
 import PlayerWord from './handlers/player-word/PlayerWord';
 import StageCurrent from './handlers/stage-current/StageCurrent';
 import Inform from './supervisors/inform/Inform';
+import PlayerPing from './handlers/player-ping/PlayerPing';
 
 const game = new Game();
 const inform = new Inform();
@@ -25,7 +26,8 @@ const handlers = new Handlers({
   [PlayerReady.type]: new PlayerReady(eventBus),
   [PlayerWord.type]: new PlayerWord(eventBus),
   [PlayerWord.type]: new PlayerWord(eventBus),
-  [StageCurrent.type]: new StageCurrent(eventBus)
+  [StageCurrent.type]: new StageCurrent(eventBus),
+  [PlayerPing.type]: new PlayerPing(eventBus)
 });
 
 const socket = (server: Server): void => {
