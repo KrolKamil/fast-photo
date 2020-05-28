@@ -12,7 +12,7 @@ class AuthCheck implements IHandler {
     this.eventBus = eventBus;
   }
 
-  handle = (message: IMessage): void => {
+  handle = async (message: IMessage): Promise<void> => {
     if (message.payload && message.payload.id) {
       if (players.exists(message.payload.id)) {
         const response: IResponse = {

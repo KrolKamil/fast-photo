@@ -6,4 +6,5 @@ export default interface IPlayer {
   ready: boolean;
   word: string | null;
   ws: WebSocket;
+  lastActiveTime: number;
 }
