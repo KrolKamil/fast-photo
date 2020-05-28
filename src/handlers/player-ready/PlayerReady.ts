@@ -29,7 +29,7 @@ export default class PlayerReady implements IHandler {
       return;
     }
 
-    if (!message.payload.id || !message.payload.ready) {
+    if (!message.payload.hasOwnProperty('id') || !message.payload.hasOwnProperty('ready')) {
       const response: IResponse = {
         ws: message.ws,
         message: {
