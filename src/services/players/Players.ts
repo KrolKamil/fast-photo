@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 class Players {
   public minimumPlayers = 2;
   public maximumPlayers = 4;
-
+  public admin: string | null = null;
   private players: BehaviorSubject<TPlayers>;
 
   constructor() {
