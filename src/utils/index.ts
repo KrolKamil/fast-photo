@@ -2,6 +2,7 @@ import stage from '../services/Stage';
 import players from '../services/players/Players';
 import playersWords from '../services/players/players-words/PlayersWords';
 import amazonWebServices from '../services/AWS';
+import playersAdmin from '../services/players/players-admin/PlayersAdmin';
 
 export const parseJsonAsync = (jsonString: string) => {
   return new Promise((resolve) => {
@@ -17,6 +18,7 @@ export const resetSocket = (): void => {
   stage.reset();
   players.reset();
   playersWords.reset();
+  playersAdmin.reset();
 };
 
 export const resetEverything = (): void => {

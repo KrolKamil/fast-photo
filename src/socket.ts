@@ -15,6 +15,7 @@ import PlayerWord from './handlers/player-word/PlayerWord';
 import StageCurrent from './handlers/stage-current/StageCurrent';
 import Inform from './supervisors/inform/Inform';
 import PlayerPing from './handlers/player-ping/PlayerPing';
+import GameStart from './handlers/game-start/GameStart';
 
 const game = new Game();
 const inform = new Inform();
@@ -27,7 +28,8 @@ const handlers = new Handlers({
   [PlayerWord.type]: new PlayerWord(eventBus),
   [PlayerWord.type]: new PlayerWord(eventBus),
   [StageCurrent.type]: new StageCurrent(eventBus),
-  [PlayerPing.type]: new PlayerPing(eventBus)
+  [PlayerPing.type]: new PlayerPing(eventBus),
+  [GameStart.type]: new GameStart(eventBus)
 });
 
 const socket = (server: Server): void => {
@@ -53,7 +55,7 @@ const socket = (server: Server): void => {
     } else {
       ws.send(
         JSON.stringify({
-          type: 'error_iternal',
+          type: 'error_internal',
           payload: {
             message: 'SERVER DOES NOT RECIVE AWS KEYS'
           }

@@ -16,6 +16,7 @@ class PlayersAdmin {
     }
   }
 
+  public reset = () => this.adminId.next('');
   public set = (id: string) => this.adminId.next(id);
   public get = () => this.adminId.getValue();
   public observe = () => this.adminId.asObservable();

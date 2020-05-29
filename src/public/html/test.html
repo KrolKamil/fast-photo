@@ -9,6 +9,13 @@
     body {
       background-color: grey;
     }
+
+    .button {
+      height: 30px;
+      width: 60px;
+      background-color: maroon;
+      color: white;
+    }
   </style>
 </head>
 
@@ -17,9 +24,23 @@
 
   Select file
 
+  <div class="button" id="start">start</div>
+
   <input type="file" id="myFile" />
   <script>
+
     let id = null;
+
+
+    document.querySelector('#start').addEventListener('click', (e) => {
+      socket.send(JSON.stringify({
+        type: 'game_start',
+        payload: {
+          id
+        }
+      }))
+    })
+
     const socket = new WebSocket('ws://localhost:3000');
 
     const processImage = (e) => {
@@ -59,7 +80,7 @@
             type: 'player_ready',
             payload: {
               id: parsedMessage.payload.id,
-              ready: false
+              ready: true
             }
           }))
         }, 1000);
