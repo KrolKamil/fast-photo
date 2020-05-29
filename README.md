@@ -109,8 +109,8 @@ Valid response example:
     }
 ```
 
-## Auth
-### welcome (stage 1)
+## Game
+### start (stage 1)
 Allows admin to start game - only available for administartor.
 ```
 {
