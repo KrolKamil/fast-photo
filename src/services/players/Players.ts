@@ -6,13 +6,12 @@ class Players {
   public minimumPlayers = 2;
   public maximumPlayers = 4;
   public admin: string | null = null;
+  public maximumInactiveTime = 15000;
   private players: BehaviorSubject<TPlayers>;
 
   constructor() {
     this.players = new BehaviorSubject(new Map());
   }
-
-  public poke = () => this.players.next(this.players.getValue());
 
   public add = (player: IPlayer): void => {
     if (this.isFull()) {
@@ -50,6 +49,12 @@ class Players {
   public reset = (): void => {
     this.players.next(new Map());
   };
+
+  public isActive = (lastActiveTime: number) =>
+    ((new Date).getTime() - lastActiveTime) < this.maximumInactiveTime;
+
+  public poke = () => this.players.next(this.players.getValue());
+
 }
 
 const players = new Players();

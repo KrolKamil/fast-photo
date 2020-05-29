@@ -1,7 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 import players from '../Players';
 import TPlayers from '../../../models/types/TPlayers';
-import { isActive } from '../players-public/PlayersPublic';
 
 class PlayersAdmin {
   constructor(
@@ -11,8 +10,9 @@ class PlayersAdmin {
   }
 
   private nominateAdmin = (players: TPlayers) => {
-    if (players.size > 0) {
-      const currentAdmin = players.get(this.adminId.getValue());
+    if (players.size > 0 &&
+      this.adminId.getValue() === '') {
+      this.set(players.values().next().value.id);
     }
   }
 

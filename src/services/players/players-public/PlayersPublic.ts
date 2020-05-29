@@ -3,8 +3,6 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import playersAdmin from '../players-admin/PlayersAdmin';
 
-export const isActive = (lastActiveTime: number) => ((new Date).getTime() - lastActiveTime) < 15000;
-
 class PlayersPublic {
   observe = (): Observable<PlayerPublicInformation[]> =>
     players.observe().pipe(
@@ -15,7 +13,7 @@ class PlayersPublic {
             id: player.id,
             ready: player.ready,
             name: player.name,
-            active: isActive(player.lastActiveTime),
+            active: players.isActive(player.lastActiveTime),
             isAdmin: playersAdmin.isAdmin(player.id)
           };
           publicInformations.push(playerReadyInformation);
