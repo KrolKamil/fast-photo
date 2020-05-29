@@ -109,6 +109,15 @@ Valid response example:
     }
 ```
 
+## Auth
+### welcome (stage 1)
+Allows admin to start game - only available for administartor.
+```
+{
+    type: 'game_start',
+    payload: {}
+}
+```
 
 # Player
 
@@ -138,6 +147,21 @@ Request example
     payload: {
         id: 'player id(u can fetch it by ws request auth_welcome'),
         name: 'abc'
+    }
+}
+```
+
+
+## ping (stage 1)
+
+Allows player keep ready status (only in stage 1)
+
+Request example
+```
+{
+    type: 'player_ping',
+    payload: {
+        id: 'player id(u can fetch it by ws request auth_welcome')
     }
 }
 ```
@@ -190,6 +214,21 @@ type: 'player_answer',
 ```
 
 ## Server peers notifications
+
+### Players information
+Server sends constantly information about connected players
+Example
+
+```
+{
+type: 'players_information',
+    payload: {
+      information: []
+    }
+}
+```
+
+
 
 ### Game starts
 When game start server will send players words.
