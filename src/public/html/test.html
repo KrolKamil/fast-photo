@@ -15,6 +15,19 @@
       width: 60px;
       background-color: maroon;
       color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .info {
+      height: 30px;
+      width: 60px;
+      background-color: mediumblue;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   </style>
 </head>
@@ -25,9 +38,11 @@
   Select file
 
   <div class="button" id="start">start</div>
+  <div id="players_info" class="info"></div>
 
   <input type="file" id="myFile" />
   <script>
+    const currentPlayersInfo = document.querySelector('#players_info');
 
     let id = null;
 
@@ -73,6 +88,10 @@
       div.innerText = message.data;
       document.body.appendChild(div);
       const parsedMessage = await JSON.parse(message.data);
+      if (parsedMessage.type === 'players_information') {
+        const infoSize = parsedMessage.payload.information.length;
+        currentPlayersInfo.innerText = infoSize;
+      }
       if (parsedMessage.type === 'auth_welcome-success') {
         id = parsedMessage.payload.id;
         setTimeout(() => {
