@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TESTING</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <h2>Client Simulator</h2>
+
+    <div class="container">
+      <div class="subcontainer">
+        <div id="auth_welcome" class="button"></div>
+        <div id="auth_welcome_text"></div>
+      </div>
+      <div class="subcontainer">
+        Select file
+        <input type="file" id="myFile" />
+      </div>
+      <div class="subcontainer">
+        <div id="ready_text"></div>
+        <div class="button" id="ready_button">Ready</div>
+      </div>
+      <div class="subcontainer">
+        <div id="players_text"></div>
+        <div id="players_button"></div>
+      </div>
+      <div class="subcontainer">
+        <div id="name_text"></div>
+        <input id="name_input">
+      </div>
+      <div class="subcontainer">
+        <div id="admin_text"></div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+    <script>
+      const x = document.querySelector('auth_welcome_text');
+      document.querySelector('#auth_welcome').addEventListener('click', sendAuthWelcome);
+      const authWelcomeText = (message) => {
+        if(message.type === 'auth_welcome-success'){
+          
+        }
+      } 
+    </script>
+  </body>
+</html>
