@@ -1,25 +1,18 @@
 import stage, { stages } from '../../services/Stage';
-// import playersReady from '../../services/players/players-ready/PlayersReady';
-// import playersWords from '../../services/players/players-words/PlayersWords';
 import { resetSocket } from '../../utils';
+import players from '../../services/players/Players';
+import TPlayers from '../../models/types/TPlayers';
 
 class Game {
   constructor() {
-    // playersReady.allReqiredReady().subscribe(this.handleGameStart);
     stage.observe().subscribe(this.handleGameEnd);
+    players.observe().subscribe(this.handleGameCancel);
   }
 
-  // private handleGameStart = (allPlayersReady: boolean): void => {
-  //   if (allPlayersReady && stage.current() === stages.AWAITING_FOR_PLAYERS) {
-  //     this.start();
-  //   }
-  // };
-
-  // private start = async (): Promise<void> => {
-  //   stage.change(stages.GAME);
-  //   playersWords.setPlayersWords();
-  //   await playersWords.sendWordsToPlayers();
-  // };
+  private handleGameCancel = (currentPlayers: TPlayers) => {
+    if (stage.current() === stages.GAME) {
+    }
+  };
 
   private handleGameEnd = (currentStage: string): void => {
     if (currentStage === stages.GAME_OVER) {

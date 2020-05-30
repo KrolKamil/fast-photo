@@ -2,6 +2,7 @@ import players from '../Players';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import playersAdmin from '../players-admin/PlayersAdmin';
+import playersActive from '../players-active/PlayersActive';
 
 class PlayersPublic {
   observe = (): Observable<PlayerPublicInformation[]> =>
@@ -13,7 +14,7 @@ class PlayersPublic {
             id: player.id,
             ready: player.ready,
             name: player.name,
-            active: players.isActive(player.id),
+            active: playersActive.isActive(player.id),
             isAdmin: playersAdmin.isAdmin(player.id)
           };
           publicInformations.push(playerReadyInformation);

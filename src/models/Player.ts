@@ -8,5 +8,6 @@ export default class Player implements IPlayer {
     public ready: boolean = false,
     public word: string | null = null,
     public name: string = 'Anonymous',
-    public lastActiveTime: number = (new Date).getTime()) { }
+    public lastActiveTime: number = new Date().getTime()
+  ) {}
 }

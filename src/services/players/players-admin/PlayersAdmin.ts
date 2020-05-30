@@ -2,6 +2,7 @@ import { BehaviorSubject } from 'rxjs';
 import players from '../Players';
 import TPlayers from '../../../models/types/TPlayers';
 import IPlayer from '../../../models/interfaces/IPlayer';
+import playersActive from '../players-active/PlayersActive';
 
 class PlayersAdmin {
   constructor(
@@ -14,7 +15,7 @@ class PlayersAdmin {
     let activePlayer = null;
     const currentPlayers = players.getAll();
     currentPlayers.forEach((player) => {
-      if (players.isActive(player.id)) {
+      if (playersActive.isActive(player.id)) {
         activePlayer = player;
       }
     });
@@ -27,7 +28,7 @@ class PlayersAdmin {
       this.set(currentPlayers.values().next().value.id);
     }
     if (currentAdminId !== '') {
-      if (!players.isActive(currentAdminId)) {
+      if (!playersActive.isActive(currentAdminId)) {
         const activePlayer = this.getActivePlayer();
         if (activePlayer) {
           this.set(activePlayer.id);

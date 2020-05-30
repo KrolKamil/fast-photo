@@ -3,7 +3,7 @@ import players from '../Players';
 // import { map } from 'rxjs/operators';
 
 class PlayersReady {
-  public isRequiredPeopleReady = () => {
+  public isRequiredPeopleReady = (): boolean => {
     let countPlayersReady = 0;
     players.getAll().forEach((player) => {
       if (player.ready) {
@@ -11,7 +11,7 @@ class PlayersReady {
       }
     });
     return countPlayersReady >= players.minimumPlayers;
-  }
+  };
 
   public changeReady = (id: string, ready: boolean): void => {
     const player = players.get(id);

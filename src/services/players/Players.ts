@@ -5,8 +5,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 class Players {
   public minimumPlayers = 2;
   public maximumPlayers = 4;
-  public admin: string | null = null;
-  public maximumInactiveTime = 15000;
   private players: BehaviorSubject<TPlayers>;
 
   constructor() {
@@ -49,10 +47,6 @@ class Players {
   public reset = (): void => {
     this.players.next(new Map());
   };
-
-  public isActive = (id: string): boolean =>
-    new Date().getTime() - this.get(id).lastActiveTime <
-    this.maximumInactiveTime;
 
   public poke = (): void => this.players.next(this.players.getValue());
 }
