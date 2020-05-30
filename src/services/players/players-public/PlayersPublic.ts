@@ -13,7 +13,7 @@ class PlayersPublic {
             id: player.id,
             ready: player.ready,
             name: player.name,
-            active: players.isActive(player.lastActiveTime),
+            active: players.isActive(player.id),
             isAdmin: playersAdmin.isAdmin(player.id)
           };
           publicInformations.push(playerReadyInformation);

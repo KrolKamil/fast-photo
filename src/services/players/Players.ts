@@ -50,11 +50,11 @@ class Players {
     this.players.next(new Map());
   };
 
-  public isActive = (lastActiveTime: number) =>
-    ((new Date).getTime() - lastActiveTime) < this.maximumInactiveTime;
+  public isActive = (id: string): boolean =>
+    new Date().getTime() - this.get(id).lastActiveTime <
+    this.maximumInactiveTime;
 
-  public poke = () => this.players.next(this.players.getValue());
-
+  public poke = (): void => this.players.next(this.players.getValue());
 }
 
 const players = new Players();
