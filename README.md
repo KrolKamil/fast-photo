@@ -115,7 +115,9 @@ Allows admin to start game - only available for administartor.
 ```
 {
     type: 'game_start',
-    payload: {}
+    payload: {
+        id: 'player id(u can fetch it by ws request auth_welcome')
+    }
 }
 ```
 
