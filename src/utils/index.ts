@@ -16,9 +16,9 @@ export const base64ToBuffer = (data: any) => Buffer.from(data, 'base64');
 
 export const resetSocket = (): void => {
   stage.reset();
+  playersAdmin.reset();
   players.reset();
   playersWords.reset();
-  playersAdmin.reset();
 };
 
 export const resetEverything = (): void => {

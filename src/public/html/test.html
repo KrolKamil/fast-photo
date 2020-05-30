@@ -1,118 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TESTING</title>
-  <style>
-    body {
-      background-color: grey;
-    }
-
-    .button {
-      height: 30px;
-      width: 60px;
-      background-color: maroon;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .info {
-      height: 30px;
-      width: 60px;
-      background-color: mediumblue;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  </style>
-</head>
-
-<body>
-  <h2>Client Simulator</h2>
-
-  Select file
-
-  <div class="button" id="start">start</div>
-  <div id="players_info" class="info"></div>
-
-  <input type="file" id="myFile" />
-  <script>
-    const currentPlayersInfo = document.querySelector('#players_info');
-
-    let id = null;
-
-
-    document.querySelector('#start').addEventListener('click', (e) => {
-      socket.send(JSON.stringify({
-        type: 'game_start',
-        payload: {
-          id
-        }
-      }))
-    })
-
-    const socket = new WebSocket('ws://localhost:3000');
-
-    const processImage = (e) => {
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.addEventListener('load', (e) => {
-        const rawData = e.target.result.split("data:image/png;base64,")[1];
-        socket.send(JSON.stringify({
-          type: 'player_answer',
-          payload: {
-            answer: rawData,
-            id
-          }
-        }));
-      });
-      reader.readAsDataURL(file);
-    }
-
-    document.getElementById("myFile").addEventListener("change", processImage, false);
-
-
-    socket.addEventListener('open', (e) => {
-      socket.send(JSON.stringify({
-        type: 'auth_welcome',
-        payload: {}
-      }));
-    });
-    socket.addEventListener('message', async (message) => {
-      const div = document.createElement('div');
-      div.innerText = message.data;
-      document.body.appendChild(div);
-      const parsedMessage = await JSON.parse(message.data);
-      if (parsedMessage.type === 'players_information') {
-        const infoSize = parsedMessage.payload.information.length;
-        currentPlayersInfo.innerText = infoSize;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TESTING</title>
+    <style>
+      body {
+        background-color: grey;
       }
-      if (parsedMessage.type === 'auth_welcome-success') {
-        id = parsedMessage.payload.id;
-        setTimeout(() => {
-          socket.send(JSON.stringify({
-            type: 'player_ready',
+
+      .button {
+        height: 30px;
+        width: 60px;
+        background-color: maroon;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .info {
+        height: 30px;
+        width: 60px;
+        background-color: mediumblue;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2>Client Simulator</h2>
+
+    Select file
+
+    <div class="button" id="start">start</div>
+    <div id="players_info" class="info"></div>
+
+    <input type="file" id="myFile" />
+    <script>
+      const currentPlayersInfo = document.querySelector('#players_info');
+
+      let id = null;
+
+      document.querySelector('#start').addEventListener('click', (e) => {
+        socket.send(
+          JSON.stringify({
+            type: 'game_start',
             payload: {
-              id: parsedMessage.payload.id,
-              ready: true
+              id
             }
-          }))
-        }, 1000);
-        socket.send(JSON.stringify({
-          type: 'player_ready',
-          payload: {
-            id: parsedMessage.payload.id,
-            ready: true
-          }
-        }));
-      }
-    })
-  </script>
-</body>
+          })
+        );
+      });
 
+      const socket = new WebSocket('ws://localhost:3000');
+
+      const processImage = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.addEventListener('load', (e) => {
+          const rawData = e.target.result.split('data:image/png;base64,')[1];
+          socket.send(
+            JSON.stringify({
+              type: 'player_answer',
+              payload: {
+                answer: rawData,
+                id
+              }
+            })
+          );
+        });
+        reader.readAsDataURL(file);
+      };
+
+      document
+        .getElementById('myFile')
+        .addEventListener('change', processImage, false);
+
+      socket.addEventListener('open', (e) => {
+        socket.send(
+          JSON.stringify({
+            type: 'auth_welcome',
+            payload: {}
+          })
+        );
+      });
+      socket.addEventListener('message', async (message) => {
+        const div = document.createElement('div');
+        div.innerText = message.data;
+        document.body.appendChild(div);
+        const parsedMessage = await JSON.parse(message.data);
+        if (parsedMessage.type === 'players_information') {
+          const infoSize = parsedMessage.payload.information.length;
+          currentPlayersInfo.innerText = infoSize;
+        }
+        if (parsedMessage.type === 'auth_welcome-success') {
+          id = parsedMessage.payload.id;
+          setTimeout(() => {
+            socket.send(
+              JSON.stringify({
+                type: 'player_ready',
+                payload: {
+                  id: parsedMessage.payload.id,
+                  ready: true
+                }
+              })
+            );
+          }, 1000);
+          socket.send(
+            JSON.stringify({
+              type: 'player_ready',
+              payload: {
+                id: parsedMessage.payload.id,
+                ready: true
+              }
+            })
+          );
+        }
+      });
+    </script>
+  </body>
 </html>
