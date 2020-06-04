@@ -16,6 +16,7 @@ import StageCurrent from './handlers/stage-current/StageCurrent';
 import Inform from './supervisors/inform/Inform';
 import PlayerPing from './handlers/player-ping/PlayerPing';
 import GameStart from './handlers/game-start/GameStart';
+import PlayerName from './handlers/player-name/PlayerName';
 
 const game = new Game();
 const inform = new Inform();
@@ -26,7 +27,7 @@ const handlers = new Handlers({
   [PlayerAnswer.type]: new PlayerAnswer(eventBus),
   [PlayerReady.type]: new PlayerReady(eventBus),
   [PlayerWord.type]: new PlayerWord(eventBus),
-  [PlayerWord.type]: new PlayerWord(eventBus),
+  [PlayerName.type]: new PlayerName(eventBus),
   [StageCurrent.type]: new StageCurrent(eventBus),
   [PlayerPing.type]: new PlayerPing(eventBus),
   [GameStart.type]: new GameStart(eventBus)

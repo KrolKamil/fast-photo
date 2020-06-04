@@ -6,7 +6,7 @@ import IMessage from '../../models/interfaces/IMessage';
 import players from '../../services/players/Players';
 import playersWords from '../../services/players/players-words/PlayersWords';
 
-class PlayerWord implements IHandler {
+export default class PlayerName implements IHandler {
   static type = 'player_name';
   private eventBus: Subject<Array<IResponse>>;
 
@@ -74,5 +74,3 @@ class PlayerWord implements IHandler {
     return;
   };
 }
-
-export default PlayerWord;
