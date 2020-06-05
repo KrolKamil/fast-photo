@@ -65,6 +65,7 @@ class PlayerAnswer implements IHandler {
         message.payload.id
       );
       if (isCorrect) {
+        const winner = players.get(message.payload.id);
         const responses: Array<IResponse> = [];
         players.getAll().forEach((player) => {
           const response: IResponse = {
@@ -72,8 +73,8 @@ class PlayerAnswer implements IHandler {
             message: {
               type: 'game_over',
               payload: {
-                winner: message.payload.id,
-                name: player.name
+                winner: winner.id,
+                name: winner.name
               }
             }
           };
