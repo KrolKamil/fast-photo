@@ -1,6 +1,6 @@
 class Socket {
-  constructor() {
-    this.subscribers = [];
+  constructor(subscribers) {
+    this.subscribers = subscribers;
     this.socket = new WebSocket('ws://localhost:3000');;
     this.id = null;
     this.socket.addEventListener('open', this.handleOpen);
@@ -53,6 +53,13 @@ class Socket {
 
   sendPing = () => this.send({
     type: 'player_ping',
+    payload: {
+      id: this.id
+    }
+  })
+
+  sendStart = () => this.send({
+    type: 'game_start',
     payload: {
       id: this.id
     }
