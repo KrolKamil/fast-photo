@@ -16,30 +16,35 @@ const readyButton = get('ready_button');
 const unreadyButton = get('unready_button');
 const pingButton = get('ping_button');
 const startButton = get('start_button');
+const last = get('last');
 
-const setId = (mesasge) => {
+const setLast = (message) => {
+  last.innerText = JSON.stringify(message.payload);
+}
+
+const setId = (message) => {
   if (message.type === 'auth_welcome-success') {
     idFromSocket = message.payload.id;
-    id.innerText = message.payload.id;
+    id.innerText = `id: ${message.payload.id}`;
   }
 }
 
-const setName = (mesasge) => {
+const setName = (message) => {
   if (message.type === 'player_name-success') {
-    tname.innerText = message.payload.name;
+    tname.innerText = `name: ${message.payload.name}`;
   }
 }
 
 const setReady = (message) => {
   if (message.type === 'player_ready-success') {
-    ready.innerText = message.payload.ready;
+    ready.innerText = `ready: ${message.payload.ready}`;
   }
 }
 
 const setStage = (message) => {
   if (message.type === 'game_start-success') {
     stage.innerText = 'GAME';
-  } else if (message.type = 'game_over') {
+  } else if (message.type === 'game_over') {
     stage.innerText = `GAME_OVER | WINNER: ${message.payload.winner}, ${message.payload.name}`
   }
 }
@@ -53,15 +58,18 @@ const setPlayersInformations = (message) => {
       sub.innerText = subText;
       container.innerHTML = sub;
       if (inf.id === idFromSocket && inf.isAdmin) {
-        admin.innerText = 'TAK';
+        admin.innerText = 'IS ADMIN: TAK';
       } else {
-        admin.innerText = 'NIE';
+        admin.innerText = 'IS ADMIN: NO';
       }
+      players.innerHTML = '';
+      players.appendChild(sub);
     });
   }
 }
 
 const socket = new Socket([
+  setLast,
   setId,
   setName,
   setReady,

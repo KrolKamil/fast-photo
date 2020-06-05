@@ -8,7 +8,7 @@ class Socket {
   }
 
   subscribe = (subscriber) => this.subscribers.push(subscriber);
-  send = (message) => socket.send(JSON.stringify(message));
+  send = (message) => this.socket.send(JSON.stringify(message));
 
   handleOpen = () => {
     this.send({
@@ -17,13 +17,13 @@ class Socket {
     });
   }
 
-  handleMessage = (message) => {
-    const parsedMessage = JSON.parse(message);
+  handleMessage = async (message) => {
+    const parsedMessage = await JSON.parse(message.data);
     if (parsedMessage.type === 'auth_welcome-success') {
       this.id = parsedMessage.id;
     }
     for (const subscriber of this.subscribers) {
-      subscriber(message);
+      subscriber(parsedMessage);
     }
   }
 
