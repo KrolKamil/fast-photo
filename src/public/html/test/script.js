@@ -31,7 +31,7 @@ class Socket {
     type: 'player_name',
     payload: {
       id: this.id,
-      name: nameInput.value
+      name
     }
   });
 
@@ -47,7 +47,7 @@ class Socket {
     type: 'player_answer',
     payload: {
       id: this.id,
-      answer: rawData
+      answer
     }
   });
 
