@@ -18,32 +18,6 @@ class PlayersReady {
     player.ready = ready;
     players.edit(player);
   };
-
-  // public allReqiredReady = (): Observable<boolean> =>
-  //   this.observeStatuses()
-  //     .pipe(map((statuses) => statuses.map((status) => status.ready)))
-  //     .pipe(
-  //       map(
-  //         (statusesBoolean) =>
-  //           !statusesBoolean.includes(false) &&
-  //           statusesBoolean.length >= players.minimumPlayers
-  //       )
-  //     );
-
-  // public observeStatuses = (): Observable<Array<PlayerReadyInformation>> =>
-  //   players.observe().pipe(
-  //     map((Players) => {
-  //       const statuses: Array<PlayerReadyInformation> = [];
-  //       Players.forEach((player) => {
-  //         const playerReadyInformation: PlayerReadyInformation = {
-  //           id: player.id,
-  //           ready: player.ready
-  //         };
-  //         statuses.push(playerReadyInformation);
-  //       });
-  //       return statuses;
-  //     })
-  //   );
 }
 
 export interface PlayerReadyInformation {
