@@ -52,6 +52,7 @@ const setStage = (message) => {
 const setPlayersInformations = (message) => {
   const container = document.createElement('div');
   if (message.type === 'players_information') {
+    players.innerHTML = '';
     message.payload.information.forEach(inf => {
       const sub = document.createElement('div');
       const subText = `name: ${inf.name} | active: ${inf.active} | ready: ${inf.ready} | isAdmin: ${inf.isAdmin} | active: ${inf.active}`;
@@ -62,7 +63,6 @@ const setPlayersInformations = (message) => {
       } else {
         admin.innerText = 'IS ADMIN: NO';
       }
-      players.innerHTML = '';
       players.appendChild(sub);
     });
   }
