@@ -11,7 +11,7 @@ class StageCurrent implements IHandler {
     this.eventBus = eventBus;
   }
 
-  handle = (message: IMessage): void => {
+  handle = async (message: IMessage): Promise<void> => {
     const response: IResponse = {
       ws: message.ws,
       message: {
