@@ -1,7 +1,8 @@
 class Socket {
   constructor(subscribers) {
     this.subscribers = subscribers;
-    this.socket = new WebSocket('ws://localhost:3000');;
+    this.socket = new WebSocket('ws://localhost:3000');
+    // this.socket = new WebSocket('ws://');
     this.id = null;
     this.socket.addEventListener('open', this.handleOpen);
     this.socket.addEventListener('message', this.handleMessage);
@@ -20,20 +21,24 @@ class Socket {
   handleMessage = async (message) => {
     const parsedMessage = await JSON.parse(message.data);
     if (parsedMessage.type === 'auth_welcome-success') {
-      this.id = parsedMessage.id;
+      this.id = parsedMessage.payload.id;
     }
     for (const subscriber of this.subscribers) {
       subscriber(parsedMessage);
     }
   }
 
-  sendName = (name) => this.send({
-    type: 'player_name',
-    payload: {
-      id: this.id,
-      name
-    }
-  });
+  sendName = (name) => {
+    console.log(this);
+    console.log(this.id);
+    this.send({
+      type: 'player_name',
+      payload: {
+        id: this.id,
+        name
+      }
+    });
+  }
 
   sendReady = (ready) => this.send({
     type: 'player_ready',

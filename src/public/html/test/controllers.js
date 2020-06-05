@@ -89,5 +89,5 @@ const processImage = (e) => {
 
 readyButton.addEventListener('click', () => socket.sendReady(true));
 unreadyButton.addEventListener('click', () => socket.sendReady(false));
-nameButton.addEventListener('click', () => socket.sendName(name.value));
+nameButton.addEventListener('click', () => socket.sendName(nameInput.value));
 answerInput.addEventListener('change', processImage, false);
