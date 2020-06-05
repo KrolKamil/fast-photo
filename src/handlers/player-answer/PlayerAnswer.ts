@@ -72,7 +72,7 @@ class PlayerAnswer implements IHandler {
             message: {
               type: 'game_over',
               payload: {
-                winner: player.id,
+                winner: message.payload.id,
                 name: player.name
               }
             }
