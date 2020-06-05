@@ -11,7 +11,6 @@ const players = get('players');
 const nameInput = get('name_input');
 const nameButton = get('name_button');
 const answerInput = get('answer_input');
-const answerButton = get('answer_button');
 const readyButton = get('ready_button');
 const unreadyButton = get('unready_button');
 const pingButton = get('ping_button');
@@ -31,7 +30,7 @@ const setId = (message) => {
 
 const setName = (message) => {
   if (message.type === 'player_name-success') {
-    tname.innerText = `name: ${message.payload.name}`;
+    name.innerText = `name: ${message.payload.name}`;
   }
 }
 
