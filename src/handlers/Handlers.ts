@@ -16,8 +16,12 @@ export default class Handlers {
     if (!this.handlers[message.type]) {
       throw new Error('missing handler for message');
     } else {
-      await playerWs(message);
-      this.handlers[message.type].handle(message);
+      try {
+        await playerWs(message);
+        await this.handlers[message.type].handle(message);
+      } catch (e) {
+        console.warn(`Error in handler. Description: ${e.message}`)
+      }
     }
   };
 }

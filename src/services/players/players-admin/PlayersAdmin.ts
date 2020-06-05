@@ -26,6 +26,7 @@ class PlayersAdmin {
     const currentAdminId = this.adminId.getValue();
     if (currentPlayers.size > 0 && currentAdminId === '') {
       this.set(currentPlayers.values().next().value.id);
+      players.poke();
     }
     if (currentAdminId !== '') {
       if (!playersActive.isActive(currentAdminId)) {

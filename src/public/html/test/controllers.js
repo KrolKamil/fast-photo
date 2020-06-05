@@ -57,13 +57,16 @@ const setPlayersInformations = (message) => {
       const subText = `name: ${inf.name} | active: ${inf.active} | ready: ${inf.ready} | isAdmin: ${inf.isAdmin} | active: ${inf.active}`;
       sub.innerText = subText;
       container.innerHTML = sub;
-      if (inf.id === idFromSocket && inf.isAdmin) {
-        admin.innerText = 'IS ADMIN: TAK';
-      } else {
-        admin.innerText = 'IS ADMIN: NO';
-      }
       players.appendChild(sub);
     });
+    const currentAdmin = message.payload.information.find((pl) => pl.isAdmin === true);
+    if (currentAdmin) {
+      if (currentAdmin.id === idFromSocket) {
+        admin.innerText = `IS ADMIN: TAK - ${currentAdmin.id}`;
+      } else {
+        admin.innerText = `IS ADMIN: NO - ${currentAdmin.id}`;
+      }
+    }
   }
 }
 
@@ -90,3 +93,5 @@ readyButton.addEventListener('click', () => socket.sendReady(true));
 unreadyButton.addEventListener('click', () => socket.sendReady(false));
 nameButton.addEventListener('click', () => socket.sendName(nameInput.value));
 answerInput.addEventListener('change', processImage, false);
+pingButton.addEventListener('click', socket.sendPing);
+startButton.addEventListener('click', socket.sendStart);
