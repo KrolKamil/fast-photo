@@ -68,3 +68,18 @@ const socket = new Socket([
   setStage,
   setPlayersInformations
 ]);
+
+const processImage = (e) => {
+  const file = e.target.files[0];
+  const reader = new FileReader();
+  reader.addEventListener('load', (e) => {
+    const rawData = e.target.result.split("data:image/png;base64,")[1];
+    socket.sendAnswer(rawData);
+  });
+  reader.readAsDataURL(file);
+}
+
+readyButton.addEventListener('click', () => socket.sendReady(true));
+unreadyButton.addEventListener('click', () => socket.sendReady(false));
+nameButton.addEventListener('click', () => socket.sendName(name.value));
+answerInput.addEventListener('change', processImage, false);
