@@ -4,7 +4,7 @@ class Socket {
     this.socket = new WebSocket('ws://localhost:3000');;
     this.id = null;
     this.socket.addEventListener('open', this.handleOpen);
-    this.socket.addEventListener('message')
+    this.socket.addEventListener('message', this.handleMessage);
   }
 
   subscribe = (subscriber) => this.subscribers.push(subscriber);
