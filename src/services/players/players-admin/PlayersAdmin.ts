@@ -32,6 +32,7 @@ class PlayersAdmin {
         const activePlayer = this.getActivePlayer();
         if (activePlayer) {
           this.set(activePlayer.id);
+          players.poke();
         }
       }
     }

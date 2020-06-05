@@ -1,0 +1,33 @@
+    body {
+      background-color: grey;
+    }
+
+    div{
+      margin: 5px;
+      box-sizing: border-box;
+    }
+
+    .button {
+    height: 40px;
+    width: 100px;
+    background-color: #001c80;
+    border-radius: 10px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    cursor: pointer;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .subcontainer{
+      display: flex;
+      justify-content: space-around;
+
+      border-bottom: 2px black solid;
+    }
