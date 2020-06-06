@@ -11,6 +11,11 @@ class Players {
     this.players = new BehaviorSubject(new Map());
   }
 
+  public delete = (playerId: string): void => {
+    this.players.getValue().delete(playerId);
+    this.poke();
+  }
+
   public add = (player: IPlayer): void => {
     if (this.isFull()) {
       throw new Error('no more space for new player');

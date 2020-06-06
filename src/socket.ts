@@ -17,9 +17,11 @@ import Inform from './supervisors/inform/Inform';
 import PlayerPing from './handlers/player-ping/PlayerPing';
 import GameStart from './handlers/game-start/GameStart';
 import PlayerName from './handlers/player-name/PlayerName';
+import Space from './supervisors/space/Space';
 
 const game = new Game();
 const inform = new Inform();
+const space = new Space();
 
 const handlers = new Handlers({
   [AuthWelcome.type]: new AuthWelcome(eventBus),

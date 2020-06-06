@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TESTING</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <h2>Client Simulator</h2>
+
+  <div class="container">
+    <div class="subcontainer">
+      <div class="left">
+        <div id="id">id: null</div>
+        <div id="name">name: Anonymous</div>
+        <div id="ready">ready: false</div>
+        <div id="admin">admin: NIE</div>
+        <div id="word">word: null</div>
+        <div id="stage"></div>
+      </div>
+      <div class="right">
+        <div id="players">null</div>
+      </div>
+    </div>
+    <div class="subcontainer">
+      <div class="left">
+        <input id="name_input" type="text">
+        <div id="name_button" class="button"><span>NAME</span></div>
+
+        <input id="answer_input" type="file">
+
+        <div id="ready_button" class="button">READY</div>
+        <div id="unready_button" class="button">UNREADY</div>
+
+        <div id="ping_button" class="button">PING</div>
+
+        <div id="start_button" class="button">START</div>
+      </div>
+      <div class="right"></div>
+    </div>
+    <div class="subcontainer">
+      <div id="last"></div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+  <script src="controllers.js"></script>
+</body>
+
+</html>

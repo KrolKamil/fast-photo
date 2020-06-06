@@ -3,9 +3,14 @@ import players from '../Players';
 class PlayersActive {
   public maximumInactiveTime = 15000;
 
-  public isActive = (id: string): boolean =>
-    new Date().getTime() - players.get(id).lastActiveTime <
-    this.maximumInactiveTime;
+  public isActive = (id: string): boolean => {
+    try {
+      return new Date().getTime() - players.get(id).lastActiveTime <
+        this.maximumInactiveTime;
+    } catch (e) {
+      return false;
+    }
+  }
 
   public updateActive = (id: string): void => {
     const player = players.get(id);
