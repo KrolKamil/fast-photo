@@ -2,7 +2,7 @@ class Socket {
   constructor(subscribers) {
     this.subscribers = subscribers;
     // this.socket = new WebSocket('ws://localhost:3000');
-    this.socket = new WebSocket('ws://fast-photo.herokuapp.com');
+    this.socket = new WebSocket('wss://fast-photo.herokuapp.com');
     this.id = null;
     this.socket.addEventListener('open', this.handleOpen);
     this.socket.addEventListener('message', this.handleMessage);
