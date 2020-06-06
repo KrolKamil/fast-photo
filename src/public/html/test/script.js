@@ -28,17 +28,14 @@ class Socket {
     }
   }
 
-  sendName = (name) => {
-    console.log(this);
-    console.log(this.id);
-    this.send({
-      type: 'player_name',
-      payload: {
-        id: this.id,
-        name
-      }
-    });
-  }
+  sendName = (name) => this.send({
+    type: 'player_name',
+    payload: {
+      id: this.id,
+      name
+    }
+  });
+
 
   sendReady = (ready) => this.send({
     type: 'player_ready',
