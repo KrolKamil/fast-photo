@@ -23,20 +23,22 @@ class PlayersAdmin {
   };
 
   private nominateAdmin = (currentPlayers: TPlayers) => {
-    const currentAdminId = this.adminId.getValue();
-    if (currentPlayers.size > 0 && currentAdminId === '') {
-      this.set(currentPlayers.values().next().value.id);
-      players.poke();
-    }
-    if (currentAdminId !== '') {
-      if (!playersActive.isActive(currentAdminId)) {
-        const activePlayer = this.getActivePlayer();
-        if (activePlayer) {
-          this.set(activePlayer.id);
-          players.poke();
+    try {
+      const currentAdminId = this.adminId.getValue();
+      if (currentPlayers.size > 0 && currentAdminId === '') {
+        this.set(currentPlayers.values().next().value.id);
+        players.poke();
+      }
+      if (currentAdminId !== '') {
+        if (!playersActive.isActive(currentAdminId)) {
+          const activePlayer = this.getActivePlayer();
+          if (activePlayer) {
+            this.set(activePlayer.id);
+            players.poke();
+          }
         }
       }
-    }
+    } catch (e) { }
   };
 
   public reset = () => this.adminId.next('');
