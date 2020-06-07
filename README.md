@@ -18,21 +18,20 @@ Server sends winner information to all players.
 # HTTP API
 
 ### Reset socket
-Restart web socket(usefeull if you lose player id)
-(does not restert AWS keys)
+Reset web socket
 ```http
 GET /reset/socket
 ```
 
 ### Reset server
-Restart whole server - socket and AWS keys
+Reset whole server
 ```http
 GET /reset/all
 ```
 
 ### Load
 Server require AWS credentials in order to work.
-This endpoint allows to load those.
+This endpoint allows to load them.
 Request MUST be JSON type
 ```http
 POST /load
